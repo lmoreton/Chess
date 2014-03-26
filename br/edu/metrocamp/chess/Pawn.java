@@ -1,32 +1,34 @@
 package br.edu.metrocamp.chess;
 
+import br.edu.metrocamp.chess.piece.utils.PieceMovements;
+
 public final class Pawn extends Piece
 {
 	public Pawn(Coordinate init, Side side)
 	{
-		name = "Pawn";
+		this.name = "Pawn";
 		this.side = side;
-		setIsvalid(false);
-		setMoved(false);
+		this.isvalid = false;
+		this.moved = false;
 		setCoord(init);
 		
 		if (side == Side.WHITE)
 		{
-			symbol = Symbols.p;
+			this.symbol = Symbols.W_Pawn;
 		}
 		else
 		{
-			symbol = Symbols.P;
+			this.symbol = Symbols.B_Pawn;
 		}
 		
 	}
 	
 	@Override
-	public Boolean movementValidator(Coordinate dest)
+	public Boolean movementValidator(Coordinate dest, Boolean dest_piece)
 	{
 		if (getSide() == Side.WHITE)
 		{
-			if ( ( getMoved() == false && ( ( Math.abs(getCoord().getCoord_y() - dest.getCoord_y()) == 0 && (getCoord().getCoord_x() - dest.getCoord_x() == 2 || getCoord().getCoord_x() - dest.getCoord_x() == 1) ) || ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 1 && getCoord().getCoord_x() - dest.getCoord_x() == 1 ) ) ) || ( getMoved() == true && ( ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 0 && getCoord().getCoord_x() - dest.getCoord_x() == 1) || ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 1 && getCoord().getCoord_x() - dest.getCoord_x() == 1 ) ) ) )
+			if (PieceMovements.whitePawn(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y(), moved, dest_piece))
 			{
 				setIsvalid(true);
 			}
@@ -37,7 +39,7 @@ public final class Pawn extends Piece
 		}
 		else
 		{
-			if ( ( getMoved() == false && ( ( Math.abs(getCoord().getCoord_y() - dest.getCoord_y()) == 0 && (dest.getCoord_x() - getCoord().getCoord_x() == 2 || dest.getCoord_x() - getCoord().getCoord_x() == 1) ) || ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 1 && dest.getCoord_x() - getCoord().getCoord_x() == 1 ) ) ) || ( getMoved() == true && ( ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 0 && dest.getCoord_x() - getCoord().getCoord_x() == 1) || ( Math.abs(dest.getCoord_y() - getCoord().getCoord_y()) == 1 && dest.getCoord_x() - getCoord().getCoord_x() == 1 ) ) ) )
+			if (PieceMovements.blackPawn(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y(), moved, dest_piece))
 			{
 				setIsvalid(true);
 			}

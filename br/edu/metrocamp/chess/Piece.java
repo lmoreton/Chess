@@ -5,9 +5,9 @@ public abstract class Piece
 	protected String name; //piece name.
 	protected Side side; //piece side (white or black).
 	protected Symbols symbol; //piece symbol.
-	private Coordinate coord; //current piece coordinate.
-	private Boolean isvalid; //flag to mark operation as valid/not valid. Default should be false.
-	private Boolean moved; //if the piece never moved before, this will be false.
+	protected Coordinate coord; //current piece coordinate.
+	protected Boolean isvalid; //flag to mark operation as valid/not valid. Default should be false.
+	protected Boolean moved; //if the piece never moved before, this will be false.
 	
 	public Side getSide()
 	{
@@ -41,7 +41,7 @@ public abstract class Piece
 	
 	public void setIsvalid(Boolean bool)
 	{
-		this.isvalid = bool;
+		isvalid = bool;
 	}
 	
 	public Boolean getMoved()
@@ -51,8 +51,8 @@ public abstract class Piece
 	
 	public void setMoved(Boolean bool)
 	{
-		this.moved = bool;
+		moved = bool;
 	}
 	
-	public abstract Boolean movementValidator(Coordinate dest);
+	public abstract Boolean movementValidator(Coordinate dest, Boolean dest_piece);
 }
