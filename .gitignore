@@ -3,4 +3,5 @@
 
 #Exclude all compiled Java classes:
 *.class
-
+bin/.*
+.*
