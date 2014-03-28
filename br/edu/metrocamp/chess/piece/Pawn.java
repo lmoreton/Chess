@@ -1,7 +1,5 @@
 package br.edu.metrocamp.chess.piece;
 
-import br.edu.metrocamp.chess.piece.utils.PieceUtils;
-
 public final class Pawn extends Piece
 {
 	public Pawn(Coordinate init, Side side, Boolean hasmoved)

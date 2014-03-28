@@ -1,6 +1,6 @@
-package br.edu.metrocamp.chess.piece.utils;
+package br.edu.metrocamp.chess.piece;
 
-public final class PieceUtils
+final class PieceUtils
 {
 	private static Boolean result;
 	
