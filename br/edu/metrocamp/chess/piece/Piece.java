@@ -1,16 +1,32 @@
 package br.edu.metrocamp.chess.piece;
 
+
 public abstract class Piece
 {
-	protected String name; //piece name.
-	protected Side side; //piece side (white or black).
-	protected Symbols symbol; //piece symbol.
-	protected Coordinate coord; //current piece coordinate.
-	protected Boolean hasmoved; //if the piece never moved before, this will be false.
+	private String name; //piece name.
+	private Side side; //piece side (white or black).
+	private Symbols symbol; //piece symbol.
+	private Coordinate coord; //current piece coordinate.
+	private Boolean hasmoved; //if the piece never moved before, this will be false.
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 	
 	public Side getSide()
 	{
 		return side;
+	}
+	
+	public void setSide(Side side)
+	{
+		this.side = side;
 	}
 	
 	public Symbols getSymbol()
@@ -18,9 +34,9 @@ public abstract class Piece
 		return symbol;
 	}
 	
-	public String getPieceName()
+	public void setSymbol(Symbols symbol)
 	{
-		return name;
+		this.symbol = symbol;
 	}
 	
 	public Coordinate getCoord()
@@ -38,10 +54,10 @@ public abstract class Piece
 		return hasmoved;
 	}
 	
-	public void setHasmoved(Boolean bool)
+	public void setHasmoved(Boolean hasmoved)
 	{
-		hasmoved = bool;
+		this.hasmoved = hasmoved;
 	}
 	
-	public abstract Boolean movementValidator(Coordinate dest, Boolean dest_piece);
+	public abstract Boolean movementValidator(Coordinate dest, Piece hasPiece);
 }

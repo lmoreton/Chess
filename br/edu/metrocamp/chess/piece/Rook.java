@@ -4,27 +4,27 @@ public final class Rook extends Piece
 {
 	public Rook(Coordinate init, Side side, Boolean hasmoved)
 	{
-		name = "Rook";
-		this.side = side;
-		this.hasmoved = hasmoved;
+		setName("Rook");
+		setSide(side);
+		setHasmoved(hasmoved);
 		setCoord(init);
 		
 		if (side == Side.WHITE)
 		{
-			this.symbol = Symbols.W_Rook;
+			setSymbol(Symbols.W_Rook);
 		}
 		else
 		{
-			this.symbol = Symbols.B_Rook;
+			setSymbol(Symbols.B_Rook);
 		}
 	}
 	
 	@Override
-	public Boolean movementValidator(Coordinate dest, Boolean dest_piece)
+	public Boolean movementValidator(Coordinate dest, Piece hasPiece)
 	{
 		Boolean isvalid;
 		
-		if (PieceUtils.RookMove(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
+		if (PieceUtils.RookMove(getCoord().getCoord_x(), getCoord().getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
 		{
 			isvalid = true;
 		}

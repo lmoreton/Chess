@@ -4,27 +4,27 @@ public final class Bishop extends Piece
 {
 	public Bishop(Coordinate init, Side side, Boolean hasmoved)
 	{
-		name = "Bishop";
-		this.side = side;
-		this.hasmoved = hasmoved;
+		setName("Bishop");
+		setSide(side);
+		setHasmoved(hasmoved);
 		setCoord(init);
 		
 		if (side == Side.WHITE)
 		{
-			this.symbol = Symbols.W_Bishop;
+			setSymbol(Symbols.W_Bishop);
 		}
 		else
 		{
-			this.symbol = Symbols.B_Bishop;
+			setSymbol(Symbols.B_Bishop);
 		}
 	}
 	
 	@Override
-	public Boolean movementValidator(Coordinate dest, Boolean dest_piece)
+	public Boolean movementValidator(Coordinate dest, Piece hasPiece)
 	{
 		Boolean isvalid;
 		
-		if (PieceUtils.BishopMove(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
+		if (PieceUtils.BishopMove(getCoord().getCoord_x(), getCoord().getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
 		{
 			isvalid = true;
 		}

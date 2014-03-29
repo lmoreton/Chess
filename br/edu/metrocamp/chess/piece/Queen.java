@@ -4,27 +4,27 @@ public final class Queen extends Piece
 {
 	public Queen(Coordinate init, Side side, Boolean hasmoved)
 	{
-		name = "Queen";
-		this.side = side;
-		this.hasmoved = hasmoved;
+		setName("Queen");
+		setSide(side);
+		setHasmoved(hasmoved);
 		setCoord(init);
 		
 		if (side == Side.WHITE)
 		{
-			this.symbol = Symbols.W_Queen;
+			setSymbol(Symbols.W_Queen);
 		}
 		else
 		{
-			this.symbol = Symbols.B_Queen;
+			setSymbol(Symbols.B_Queen);
 		}
 	}
 	
 	@Override
-	public Boolean movementValidator(Coordinate dest, Boolean dest_piece)
+	public Boolean movementValidator(Coordinate dest, Piece hasPiece)
 	{
 		Boolean isvalid;
 		
-		if (PieceUtils.QueenMove(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
+		if (PieceUtils.QueenMove(getCoord().getCoord_x(), getCoord().getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
 		{
 			isvalid = true;
 		}

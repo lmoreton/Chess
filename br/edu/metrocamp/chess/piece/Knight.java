@@ -4,27 +4,27 @@ public final class Knight extends Piece
 {
 	public Knight(Coordinate init, Side side, Boolean hasmoved)
 	{
-		name = "Knight";
-		this.side = side;
-		this.hasmoved = hasmoved;
+		setName("Knight");
+		setSide(side);
+		setHasmoved(hasmoved);
 		setCoord(init);
 		
 		if (side == Side.WHITE)
 		{
-			this.symbol = Symbols.W_Knight;
+			setSymbol(Symbols.W_Knight);
 		}
 		else
 		{
-			this.symbol = Symbols.B_Knight;
+			setSymbol(Symbols.B_Knight);
 		}
 	}
 	
 	@Override
-	public Boolean movementValidator(Coordinate dest, Boolean dest_piece)
+	public Boolean movementValidator(Coordinate dest, Piece hasPiece)
 	{
 		Boolean isvalid;
 		
-		if (PieceUtils.KnightMove(coord.getCoord_x(), coord.getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
+		if (PieceUtils.KnightMove(getCoord().getCoord_x(), getCoord().getCoord_y(), dest.getCoord_x(), dest.getCoord_y()))
 		{
 			isvalid = true;
 		}
