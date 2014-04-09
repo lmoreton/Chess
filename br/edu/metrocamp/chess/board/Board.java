@@ -56,6 +56,27 @@ public class Board
 	
 	public void draw()
 	{
+		System.out.println("  |---|---|---|---|---|---|---|---|");
 		
+		for (int i = 0; i < board_size; i++)
+		{
+			System.out.print(board_size - i + " |");
+			
+			for (int j = 0; j < board_size; j++)
+			{
+				if (getPiece(i,j) == null)
+				{
+					System.out.print("   |");
+				}
+				else
+				{
+					System.out.print(" " + getPiece(i,j).getSymbol().toChar() + " |");
+				}
+			}
+			
+			System.out.println("  |-------------------------------|");
+		}
+		
+		System.out.println("    A   B   C   D   E   F   G   H  \n");
 	}
 }
