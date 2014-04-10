@@ -36,6 +36,8 @@ public class Game
 	private void gameLoop()
 	{
 		boolean gameOver = false;
+		boolean didItWork = true;
+		int turnCount = 0;
 		String keyboardInput;
 		do
 		{
@@ -43,13 +45,26 @@ public class Game
 			display();
 			keyboardInput = "";
 			readKeyboard.next(keyboardInput);
-			
+			//didItWork = moveRealization();
+			if (didItWork)
+			{
+				turnCount++;
+			}
+			//turn = turnCount % 2;
 		} while (!gameOver);
 	}
 	
 	private void display()
 	{
 		chessBoard.draw();
+		if (turn == Side.WHITE)
+		{
+			System.out.print("White turn: ");
+		}
+		else
+		{
+			System.out.print("Black turn: ");
+		}
 	}
 	
 	private void clearConsole()
@@ -75,39 +90,24 @@ public class Game
 	
 	private void gameGreetings()
 	{
-		System.out.println("      #  #####  #     # #######  #####   #####");
-		System.out.println("      # #     # #     # #       #     # #     #");
-		System.out.println("      # #       #     # #       #       #");
-		System.out.println("      # #       ####### #####    #####   #####");
-		System.out.println("#     # #       #     # #             #       #");
-		System.out.println("#     # #     # #     # #       #     # #     #");
-		System.out.println(" #####   #####  #     # #######  #####   #####");
+		System.out.println("      #    #####  #     # #######  #####   #####");
+		System.out.println("      #   #     # #     # #       #     # #     #");
+		System.out.println("      #   #       #     # #       #       #");
+		System.out.println("      # # #       ####### #####    #####   #####");
+		System.out.println("#     #   #       #     # #             #       #");
+		System.out.println("#     #   #     # #     # #       #     # #     #");
+		System.out.println(" #####     #####  #     # #######  #####   #####");
 		System.out.println("\n\n");
 		System.out.print("Loading");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.print(".");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.print(".");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.print(".");
 		
 		try {
 			Thread.sleep(1000);
+			System.out.print(".");
+			Thread.sleep(1000);
+			System.out.print(".");
+			Thread.sleep(1000);
+			System.out.print(".\n");
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
