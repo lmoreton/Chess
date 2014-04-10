@@ -56,7 +56,7 @@ public class Board
 	
 	public void draw()
 	{
-		System.out.println("  |---|---|---|---|---|---|---|---|");
+		System.out.println("  |-------------------------------|");
 		
 		for (int i = 0; i < board_size; i++)
 		{
@@ -74,6 +74,7 @@ public class Board
 				}
 			}
 			
+			System.out.println("");
 			System.out.println("  |-------------------------------|");
 		}
 		
