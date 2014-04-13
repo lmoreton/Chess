@@ -1,5 +1,9 @@
 package br.edu.metrocamp.chess.piece;
 
+import java.util.ArrayList;
+
+import br.edu.metrocamp.chess.exceptions.*;
+
 
 public abstract class Piece
 {
@@ -59,5 +63,7 @@ public abstract class Piece
 		this.hasmoved = hasmoved;
 	}
 	
-	public abstract Boolean movementValidator(Coordinate dest, Piece hasPiece);
+	public abstract ArrayList<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException;
+	
+	protected abstract ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest);
 }

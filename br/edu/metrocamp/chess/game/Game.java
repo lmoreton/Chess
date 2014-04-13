@@ -7,63 +7,98 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.edu.metrocamp.chess.board.Board;
+import br.edu.metrocamp.chess.exceptions.ChessException;
 import br.edu.metrocamp.chess.piece.*;
 
 /**
- * @author lucasmo
- *
+ * @author Lucas
+ * @author Fabi
+ * @author Vini
+ * @author Marcos
+ * @author Ton
+ * @category Class
  */
 public class Game
 {
-	private ArrayList<Piece> pieceList = new ArrayList<Piece>();
+	private ArrayList<Piece> pieceList;
 	private Board chessBoard;
 	private Side turn;
-	private Scanner readKeyboard = new Scanner(System.in);
-	//private Message message = new Message();
+	private Scanner readKeyboard;
+	private String keyboardInput;
+	private Jogada jog;
 	
+	/**
+	 * @category Constructor
+	 */
 	public Game()
 	{
-		//pieceList = newGame();
-		pieceList = newGame();
+		newGame(); //Initialize pieceList
 		chessBoard = new Board(pieceList);
-		//print the game initial interface (?)
 		gameGreetings();
-		//be ready to receive commands from users (?)
+		readKeyboard = new Scanner(System.in);
+		keyboardInput = "";
+		jog = new Jogada();
 		turn = Side.WHITE;
 		gameLoop();
 	}
 	
 	private void gameLoop()
 	{
-		boolean gameOver = false;
-		boolean didItWork = true;
-		int turnCount = 0;
-		String keyboardInput;
+		boolean checkmate = false;
+		boolean didItWork;
+		long turnCount = 0;
+		try
+		{
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("\n\n" + e.getMessage() + "\n\n");
+		}
+		
 		do
 		{
-			clearConsole();
-			display();
-			keyboardInput = "";
-			readKeyboard.next(keyboardInput);
-			//didItWork = moveRealization();
-			if (didItWork)
+			try
 			{
-				turnCount++;
+				display();
+				keyboardInput = readKeyboard.nextLine();
+				jog.generateMatrixCoord(keyboardInput);
+				
+				didItWork = moveRealization();
+				
+				if (didItWork)
+				{
+					turnCount++;
+				}
+				turn = Side.values()[(int) (turnCount % 2)];
+				
+				if (chessBoard.getPiece(jog.dest).getName() == "King")
+				{
+					checkmate = true;
+				}
 			}
-			//turn = turnCount % 2;
-		} while (!gameOver);
+			catch(Exception e)
+			{
+				System.out.println(e.getMessage());
+			}
+		}
+		while(!checkmate);
 	}
+	
 	
 	private void display()
 	{
+		clearConsole();
+		System.out.println("\n");
 		chessBoard.draw();
+		
 		if (turn == Side.WHITE)
 		{
-			System.out.print("White turn: ");
+			System.out.print("\nWhite turn: ");
 		}
 		else
 		{
-			System.out.print("Black turn: ");
+			System.out.print("\nBlack turn: ");
 		}
 	}
 	
@@ -84,19 +119,19 @@ public class Game
 		}
 		catch (Exception e)
 		{
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			System.out.println("Clear console failed, as per the error message below: \n\n" + e.getMessage());
 		}
 	}
 	
 	private void gameGreetings()
 	{
-		System.out.println("      #    #####  #     # #######  #####   #####");
-		System.out.println("      #   #     # #     # #       #     # #     #");
-		System.out.println("      #   #       #     # #       #       #");
-		System.out.println("      # # #       ####### #####    #####   #####");
-		System.out.println("#     #   #       #     # #             #       #");
-		System.out.println("#     #   #     # #     # #       #     # #     #");
-		System.out.println(" #####     #####  #     # #######  #####   #####");
+		System.out.println("      #   #####  #     # #######  #####   #####"	);
+		System.out.println("      #  #     # #     # #       #     # #     #"	);
+		System.out.println("      #  #       #     # #       #       #"			);
+		System.out.println("      #  #       ####### #####    #####   #####"	);
+		System.out.println("#     #  #       #     # #             #       #"	);
+		System.out.println("#     #  #     # #     # #       #     # #     #"	);
+		System.out.println(" #####    #####  #     # #######  #####   #####"	);
 		System.out.println("\n\n");
 		System.out.print("Loading");
 		
@@ -109,14 +144,13 @@ public class Game
 			System.out.print(".\n");
 			
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Something unexpected happened: \n\n" + e.getMessage());
 		}
 	}
 	
-	private ArrayList<Piece> newGame()
+	private void newGame()
 	{
-		ArrayList<Piece> pieceList = new ArrayList<Piece>();
+		pieceList = new ArrayList<Piece>();
 		
 		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
@@ -151,7 +185,31 @@ public class Game
 		pieceList.add(new Bishop(new Coordinate(7,5), Side.WHITE, false));
 		pieceList.add(new Knight(new Coordinate(7,6), Side.WHITE, false));
 		pieceList.add(new Rook(new Coordinate(7,7), Side.WHITE, false));
+	}
+	
+	private boolean moveRealization() throws ChessException
+	{
+		boolean bool = inputFirstFilter();
 		
-		return pieceList;
+		bool = chessBoard.movePiece(jog.orig, jog.dest);
+		
+		
+		return bool;
+	}
+	
+	private boolean inputFirstFilter()
+	{
+		boolean bool;
+		
+		if (keyboardInput.length() > 5 || keyboardInput.isEmpty())
+		{
+			bool = false;
+		}
+		else
+		{
+			bool = true;
+		}
+		
+		return bool;
 	}
 }

@@ -1,5 +1,13 @@
 package br.edu.metrocamp.chess.piece;
 
+/**
+ * @author Lucas
+ * @author Fabi
+ * @author Vini
+ * @author Marcos
+ * @author Ton
+ * @category Class
+ */
 public class Coordinate
 {
 	private int x;
@@ -14,7 +22,9 @@ public class Coordinate
 	
 	public Coordinate()
 	{
-		//Default constructor.
+		//Default constructor setting default values to x/y.
+		x = -1;
+		y = -1;
 	}
 	
 	public int getCoord_x()
