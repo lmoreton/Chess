@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.edu.metrocamp.chess.board.Board;
-import br.edu.metrocamp.chess.exceptions.ChessException;
+import br.edu.metrocamp.chess.exceptions.*;
 import br.edu.metrocamp.chess.piece.*;
 
 /**
@@ -47,14 +47,6 @@ public class Game
 		boolean checkmate = false;
 		boolean didItWork;
 		long turnCount = 0;
-		try
-		{
-			
-		}
-		catch(Exception e)
-		{
-			System.out.println("\n\n" + e.getMessage() + "\n\n");
-		}
 		
 		do
 		{
@@ -72,7 +64,7 @@ public class Game
 				}
 				turn = Side.values()[(int) (turnCount % 2)];
 				
-				if (chessBoard.getPiece(jog.dest).getName() == "King")
+				if (chessBoard.getPiece(jog.dest).getName() == "King") //Check if its 'checkmate'.
 				{
 					checkmate = true;
 				}
@@ -189,26 +181,29 @@ public class Game
 	
 	private boolean moveRealization() throws ChessException
 	{
-		boolean bool = inputFirstFilter();
-		
-		bool = chessBoard.movePiece(jog.orig, jog.dest);
-		
-		
-		return bool;
-	}
-	
-	private boolean inputFirstFilter()
-	{
 		boolean bool;
 		
-		if (keyboardInput.length() > 5 || keyboardInput.isEmpty())
+		if (this.keyboardInput.length() > 5 || this.keyboardInput.isEmpty() || this.jog.orig == this.jog.dest)
 		{
 			bool = false;
+			throw new ChessArgumentException();
 		}
 		else
 		{
-			bool = true;
+			if (this.turn != chessBoard.getPiece(jog.orig).getSide() 
+				|| chessBoard.getPiece(jog.orig).getSide() != chessBoard.getPiece(jog.dest).getSide()
+				|| chessBoard.getPiece(jog.orig) == null)
+			{
+				throw new ChessArgumentException();
+			}
+			else
+			{
+				bool = true;
+			}
 		}
+		
+		bool = chessBoard.movePiece(jog.orig, jog.dest);
+		
 		
 		return bool;
 	}

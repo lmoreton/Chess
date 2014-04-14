@@ -2,4 +2,4 @@
 # from being added to the project.
 
 #Exclude all compiled Java classes:
-*.class
+bin/*.class

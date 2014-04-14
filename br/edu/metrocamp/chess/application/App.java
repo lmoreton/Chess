@@ -6,10 +6,13 @@ package br.edu.metrocamp.chess.application;
 import br.edu.metrocamp.chess.game.Game;
 
 /**
- * @author lucasmo
- *
- */
-public class App
+ * @author Lucas
+ * @author Fabi
+ * @author Vini
+ * @author Marcos
+ * @author Ton
+ * @category Class
+ */ class App
 {
 	/**
 	 * @param args

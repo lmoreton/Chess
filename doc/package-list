@@ -1,0 +1,5 @@
+br.edu.metrocamp.chess.application
+br.edu.metrocamp.chess.board
+br.edu.metrocamp.chess.exceptions
+br.edu.metrocamp.chess.game
+br.edu.metrocamp.chess.piece
