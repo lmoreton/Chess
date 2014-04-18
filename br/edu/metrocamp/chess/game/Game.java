@@ -69,7 +69,7 @@ public class Game
 					checkmate = true;
 				}
 			}
-			catch(Exception e)
+			catch(ChessException e)
 			{
 				System.out.println(e.getMessage());
 			}
@@ -190,15 +190,22 @@ public class Game
 		}
 		else
 		{
-			if (this.turn != chessBoard.getPiece(jog.orig).getSide() 
-				|| chessBoard.getPiece(jog.orig).getSide() != chessBoard.getPiece(jog.dest).getSide()
-				|| chessBoard.getPiece(jog.orig) == null)
+			if (chessBoard.getPiece(jog.orig) == null 
+				|| this.turn != chessBoard.getPiece(jog.orig).getSide())
 			{
 				throw new ChessArgumentException();
 			}
 			else
 			{
-				bool = true;
+				if (chessBoard.getPiece(jog.dest) != null 
+					&& (chessBoard.getPiece(jog.orig).getSide() != chessBoard.getPiece(jog.dest).getSide()))
+				{
+					throw new ChessArgumentException();
+				}
+				else
+				{
+					bool = true;
+				}
 			}
 		}
 		
