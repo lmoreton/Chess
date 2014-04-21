@@ -9,7 +9,7 @@ import br.edu.metrocamp.chess.exceptions.*;
  * @author Fabi
  * @author Vini
  * @author Marcos
- * @author Ton
+ * @author Adailton
  * @category Class
  */
 public final class Pawn extends Piece

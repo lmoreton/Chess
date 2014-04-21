@@ -15,7 +15,7 @@ import br.edu.metrocamp.chess.piece.*;
  * @author Fabi
  * @author Vini
  * @author Marcos
- * @author Ton
+ * @author Adailton
  * @category Class
  */
 public class Game

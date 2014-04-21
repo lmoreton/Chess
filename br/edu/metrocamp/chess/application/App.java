@@ -10,7 +10,7 @@ import br.edu.metrocamp.chess.game.Game;
  * @author Fabi
  * @author Vini
  * @author Marcos
- * @author Ton
+ * @author Adailton
  * @category Class
  */ class App
 {
