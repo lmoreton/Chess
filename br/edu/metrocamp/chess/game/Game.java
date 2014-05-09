@@ -96,23 +96,12 @@ public class Game
 	
 	private void clearConsole()
 	{
-		String os = System.getProperty("os.name");
+		//Dummy implementation to clear the screen, to be modified in the future(or not)! :D:D:D
 		
-		try
-		{
-			if (os.contains("Windows"))
-			{
-				Runtime.getRuntime().exec("cls");
-			}
-			else
-			{
-				Runtime.getRuntime().exec("clear");
-			}
-		}
-		catch (Exception e)
-		{
-			System.out.println("Clear console failed, as per the error message below: \n\n" + e.getMessage());
-		}
+		System.out.println(	"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + 
+							"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + 
+							"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + 
+							"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" );
 	}
 	
 	private void gameGreetings()
