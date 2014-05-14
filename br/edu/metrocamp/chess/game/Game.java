@@ -71,7 +71,9 @@ public class Game
 			}
 			catch(ChessException e)
 			{
-				System.out.println(e.getMessage());
+				System.out.println("\n" + e.getMessage() + "\n****************************\n" + 
+								   "Press ENTER to continue..." + "\n****************************\n");
+				readKeyboard.nextLine();
 			}
 		}
 		while(!checkmate);
