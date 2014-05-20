@@ -135,14 +135,14 @@ public class Game
 	{
 		pieceList = new ArrayList<Piece>();
 		
-		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false));
+		//pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));
 		pieceList.add(new Rook(new Coordinate(0,0), Side.BLACK, false));
 		pieceList.add(new Knight(new Coordinate(0,1), Side.BLACK, false));
 		pieceList.add(new Bishop(new Coordinate(0,2), Side.BLACK, false));
@@ -152,14 +152,14 @@ public class Game
 		pieceList.add(new Knight(new Coordinate(0,6), Side.BLACK, false));
 		pieceList.add(new Rook(new Coordinate(0,7), Side.BLACK, false));
 		//---------------------------------------------------------------
-		pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false));
+		//pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));
 		pieceList.add(new Rook(new Coordinate(7,0), Side.WHITE, false));
 		pieceList.add(new Knight(new Coordinate(7,1), Side.WHITE, false));
 		pieceList.add(new Bishop(new Coordinate(7,2), Side.WHITE, false));

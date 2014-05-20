@@ -23,20 +23,7 @@ public final class Pawn extends Piece
 	 */
 	public Pawn(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("Pawn");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_Pawn);
-		}
-		else
-		{
-			setSymbol(Symbols.B_Pawn);
-		}
-		
+		super("Pawn", init, side, hasmoved);
 	}
 	
 	/**
@@ -50,70 +37,50 @@ public final class Pawn extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if (getSide() == Side.WHITE)
+		if ( Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 0
+			 && ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 1
+			 || ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 2 
+			 && this.getHasmoved() == false ) ) ) //Vertical verifications.
 		{
-			if (( this.getHasmoved() == false 
-					&& ( ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-					&& (this.getCoord().getCoord_x() - dest.getCoord_x() == 2 
-					|| (this.getCoord().getCoord_x() - dest.getCoord_x() == 1 )) ) 
-					|| ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 1 
-					&& this.getCoord().getCoord_x() - dest.getCoord_x() == 1 
-					&& hasPiece != null ) ) )
-					
-					|| ( this.getHasmoved() != false 
-					&& ( (Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-					&& (this.getCoord().getCoord_x() - dest.getCoord_x() == 1 )) 
-					|| ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 1 
-					&& this.getCoord().getCoord_x() - dest.getCoord_x() == 1 
-					&& hasPiece != null ) ) )) //Verify if movement is valid for a White Pawn.
+			if ( this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 			{
-				if ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-						&& ((this.getCoord().getCoord_x() - dest.getCoord_x() == 2 && hasPiece == null) 
-						|| ((this.getCoord().getCoord_x() - dest.getCoord_x() == 1  && hasPiece == null))))
+				coordinates = getCoordinates(coordinates, this.getCoord(), dest);
+			}
+			else
+			{
+				if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
 				{
-					throw new ChessPathException();
+					coordinates = getCoordinates(coordinates, this.getCoord(), dest);
 				}
 				else
 				{
-					coordinates = new ArrayList<Coordinate>();
-					coordinates = getCoordinates(coordinates,  this.getCoord(), dest);
+					throw new ChessPieceMovementException();
 				}
-			}
-			else //if it's not valid, throws a new exception.
-			{
-				throw new ChessPieceMovementException();
 			}
 		}
 		else
 		{
-			if (( this.getHasmoved() == false 
-					&& ( ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-					&& (dest.getCoord_x() - this.getCoord().getCoord_x() == 2 
-					|| (dest.getCoord_x() - this.getCoord().getCoord_x() == 1 )) ) 
-					|| ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 1 
-					&& dest.getCoord_x() - this.getCoord().getCoord_x() == 1 
-					&& hasPiece != null ) ) )
-					
-					|| ( this.getHasmoved() != false 
-					&& ( (Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-					&& (dest.getCoord_x() - this.getCoord().getCoord_x() == 1 )) 
-					|| ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 1 
-					&& dest.getCoord_x() - this.getCoord().getCoord_x() == 1 
-					&& hasPiece != null ) ) )) //Verify if movement is valid for a Black Pawn.
+			if ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x())  == 1
+				 && Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y())  == 1
+				 && hasPiece != null ) //Diagonal verifications.
 			{
-				if ( Math.abs(dest.getCoord_y() - this.getCoord().getCoord_y()) == 0 
-						&& ((dest.getCoord_x() - this.getCoord().getCoord_x() == 2 && hasPiece != null) 
-						|| ((dest.getCoord_x() - this.getCoord().getCoord_x() == 1  && hasPiece != null))))
+				if (this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 				{
-					throw new ChessPathException();
+					//OK
 				}
 				else
 				{
-					coordinates = new ArrayList<Coordinate>();
-					coordinates = getCoordinates(coordinates,  this.getCoord(), dest);
+					if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
+					{
+						//OK
+					}
+					else
+					{
+						throw new ChessPieceMovementException();
+					}
 				}
 			}
-			else //if it's not valid, throws a new exception.
+			else
 			{
 				throw new ChessPieceMovementException();
 			}
@@ -160,5 +127,26 @@ public final class Pawn extends Piece
 		}
 		
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_Pawn;
+		}
+		else
+		{
+			symbol = Symbols.B_Pawn;
+		}
+		
+		return symbol;
 	}
 }

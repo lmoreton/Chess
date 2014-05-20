@@ -23,19 +23,7 @@ public final class Rook extends Piece
 	 */
 	public Rook(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("Rook");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_Rook);
-		}
-		else
-		{
-			setSymbol(Symbols.B_Rook);
-		}
+		super("Rook", init, side, hasmoved);
 	}
 	
 	/**
@@ -116,5 +104,26 @@ public final class Rook extends Piece
 		}
 		
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_Rook;
+		}
+		else
+		{
+			symbol = Symbols.B_Rook;
+		}
+		
+		return symbol;
 	}
 }

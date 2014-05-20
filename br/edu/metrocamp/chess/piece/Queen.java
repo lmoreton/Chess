@@ -23,19 +23,7 @@ public final class Queen extends Piece
 	 */
 	public Queen(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("Queen");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_Queen);
-		}
-		else
-		{
-			setSymbol(Symbols.B_Queen);
-		}
+		super("Queen", init, side, hasmoved);
 	}
 	
 	/**
@@ -166,5 +154,26 @@ public final class Queen extends Piece
 		}
 		
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_Queen;
+		}
+		else
+		{
+			symbol = Symbols.B_Queen;
+		}
+		
+		return symbol;
 	}
 }

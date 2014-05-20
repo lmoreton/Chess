@@ -23,19 +23,7 @@ public final class King extends Piece
 	 */
 	public King(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("King");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_King);
-		}
-		else
-		{
-			setSymbol(Symbols.B_King);
-		}
+		super("King", init, side, hasmoved);
 	}
 	
 	/**
@@ -74,5 +62,26 @@ public final class King extends Piece
 		// to any direction, hence the list will contain only the destination coordinate. No further verification is needed.
 		coordinates.add(dest);
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_King;
+		}
+		else
+		{
+			symbol = Symbols.B_King;
+		}
+		
+		return symbol;
 	}
 }

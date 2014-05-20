@@ -22,19 +22,7 @@ public final class Bishop extends Piece
 	 */
 	public Bishop(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("Bishop");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_Bishop);
-		}
-		else
-		{
-			setSymbol(Symbols.B_Bishop);
-		}
+		super("Bishop", init, side, hasmoved);
 	}
 	
 	/**
@@ -119,5 +107,26 @@ public final class Bishop extends Piece
 		}
 		
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_Bishop;
+		}
+		else
+		{
+			symbol = Symbols.B_Bishop;
+		}
+		
+		return symbol;
 	}
 }

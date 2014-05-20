@@ -13,14 +13,25 @@ public abstract class Piece
 	private Coordinate coord; //current piece coordinate.
 	private Boolean hasmoved; //if the piece never moved before, this will be false.
 	
+	/**
+	 * 
+	 * @param name
+	 * @param init
+	 * @param side
+	 * @param hasmoved
+	 */
+	public Piece(String name, Coordinate init, Side side, Boolean hasmoved)
+	{
+		this.name = name;
+		this.coord = init;
+		this.side = side;
+		this.symbol = defSymbol(side);
+		this.hasmoved = hasmoved;
+	}
+	
 	public String getName()
 	{
 		return name;
-	}
-	
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 	
 	public Side getSide()
@@ -28,19 +39,9 @@ public abstract class Piece
 		return side;
 	}
 	
-	public void setSide(Side side)
-	{
-		this.side = side;
-	}
-	
 	public Symbols getSymbol()
 	{
 		return symbol;
-	}
-	
-	public void setSymbol(Symbols symbol)
-	{
-		this.symbol = symbol;
 	}
 	
 	public Coordinate getCoord()
@@ -66,4 +67,6 @@ public abstract class Piece
 	public abstract ArrayList<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException;
 	
 	protected abstract ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest);
+	
+	protected abstract Symbols defSymbol(Side side);
 }

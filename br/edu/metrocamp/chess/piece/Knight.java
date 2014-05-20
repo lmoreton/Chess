@@ -23,19 +23,7 @@ public final class Knight extends Piece
 	 */
 	public Knight(Coordinate init, Side side, Boolean hasmoved)
 	{
-		setName("Knight");
-		setSide(side);
-		setHasmoved(hasmoved);
-		setCoord(init);
-		
-		if (side == Side.WHITE) //Decision of piece's symbol.
-		{
-			setSymbol(Symbols.W_Knight);
-		}
-		else
-		{
-			setSymbol(Symbols.B_Knight);
-		}
+		super("Knight", init, side, hasmoved);
 	}
 	
 	/**
@@ -75,5 +63,26 @@ public final class Knight extends Piece
 		//Knight is able to jump, hence the list will contain only the destination coordinate. No further verification is needed.
 		coordinates.add(dest);
 		return coordinates;
+	}
+	
+	/**
+	 * @category Method
+	 * 
+	 */
+	@Override
+	protected Symbols defSymbol(Side side)
+	{
+		Symbols symbol;
+		
+		if (side == Side.WHITE)
+		{
+			symbol = Symbols.W_Knight;
+		}
+		else
+		{
+			symbol = Symbols.B_Knight;
+		}
+		
+		return symbol;
 	}
 }
