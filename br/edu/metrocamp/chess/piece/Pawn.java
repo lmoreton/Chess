@@ -138,14 +138,8 @@ public final class Pawn extends Piece
 	{
 		Symbols symbol;
 		
-		if (side == Side.WHITE)
-		{
-			symbol = Symbols.W_Pawn;
-		}
-		else
-		{
-			symbol = Symbols.B_Pawn;
-		}
+		if (side == Side.WHITE) symbol = Symbols.W_Pawn;
+		else symbol = Symbols.B_Pawn;
 		
 		return symbol;
 	}

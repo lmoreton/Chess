@@ -73,14 +73,8 @@ public final class King extends Piece
 	{
 		Symbols symbol;
 		
-		if (side == Side.WHITE)
-		{
-			symbol = Symbols.W_King;
-		}
-		else
-		{
-			symbol = Symbols.B_King;
-		}
+		if (side == Side.WHITE) symbol = Symbols.W_King;
+		else symbol = Symbols.B_King;
 		
 		return symbol;
 	}

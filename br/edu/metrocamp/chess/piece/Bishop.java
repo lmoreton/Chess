@@ -118,14 +118,8 @@ public final class Bishop extends Piece
 	{
 		Symbols symbol;
 		
-		if (side == Side.WHITE)
-		{
-			symbol = Symbols.W_Bishop;
-		}
-		else
-		{
-			symbol = Symbols.B_Bishop;
-		}
+		if (side == Side.WHITE) symbol = Symbols.W_Bishop;
+		else symbol = Symbols.B_Bishop;
 		
 		return symbol;
 	}

@@ -165,14 +165,8 @@ public final class Queen extends Piece
 	{
 		Symbols symbol;
 		
-		if (side == Side.WHITE)
-		{
-			symbol = Symbols.W_Queen;
-		}
-		else
-		{
-			symbol = Symbols.B_Queen;
-		}
+		if (side == Side.WHITE) symbol = Symbols.W_Queen;
+		else symbol = Symbols.B_Queen;
 		
 		return symbol;
 	}

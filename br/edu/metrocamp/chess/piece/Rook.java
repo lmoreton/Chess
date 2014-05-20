@@ -115,14 +115,8 @@ public final class Rook extends Piece
 	{
 		Symbols symbol;
 		
-		if (side == Side.WHITE)
-		{
-			symbol = Symbols.W_Rook;
-		}
-		else
-		{
-			symbol = Symbols.B_Rook;
-		}
+		if (side == Side.WHITE) symbol = Symbols.W_Rook;
+		else symbol = Symbols.B_Rook;
 		
 		return symbol;
 	}
