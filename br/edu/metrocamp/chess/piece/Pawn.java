@@ -44,13 +44,13 @@ public final class Pawn extends Piece
 		{
 			if ( this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 			{
-				coordinates = getCoordinates(coordinates, this.getCoord(), dest);
+				coordinates = getCoordinates(this.getCoord(), dest);
 			}
 			else
 			{
 				if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
 				{
-					coordinates = getCoordinates(coordinates, this.getCoord(), dest);
+					coordinates = getCoordinates(this.getCoord(), dest);
 				}
 				else
 				{
@@ -94,8 +94,9 @@ public final class Pawn extends Piece
 	 * Purpose: Verify the positions the piece will assume on its way to the destination coordinate,
 	 * 			add it to the coordinate list and then return the list with these coordinates.
 	 */
-	protected ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest)
+	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
+		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 		int i, j;
 		i = j = 0;
 		

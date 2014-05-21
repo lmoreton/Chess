@@ -66,7 +66,7 @@ public abstract class Piece
 	
 	public abstract ArrayList<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException;
 	
-	protected abstract ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest);
+	protected abstract ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest);
 	
 	protected abstract Symbols defSymbol(Side side);
 }

@@ -40,8 +40,7 @@ public final class Rook extends Piece
 		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 0 
 				|| Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 0) //Verify if movement is valid.
 		{
-			coordinates = new ArrayList<Coordinate>();
-			coordinates = getCoordinates(coordinates, this.getCoord(), dest);
+			coordinates = getCoordinates(this.getCoord(), dest);
 		}
 		else //if it's not valid, throws a new exception.
 		{
@@ -56,8 +55,9 @@ public final class Rook extends Piece
 	 * Purpose: Verify the positions the piece will assume on its way to the destination coordinate,
 	 * 			add it to the coordinate list and then return the list with these coordinates.
 	 */
-	protected ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest)
+	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
+		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 		int i, j;
 		i = j = 0;
 		

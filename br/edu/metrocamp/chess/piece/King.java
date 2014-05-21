@@ -40,8 +40,7 @@ public final class King extends Piece
 		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) <= 1 
 				&& Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) <= 1) //Verify if movement is valid.
 		{
-			coordinates = new ArrayList<Coordinate>();
-			coordinates = getCoordinates(coordinates, this.getCoord(), dest);
+			coordinates = getCoordinates(this.getCoord(), dest);
 		}
 		else //if it's not valid, throws a new exception.
 		{
@@ -56,10 +55,11 @@ public final class King extends Piece
 	 * Purpose: Verify the positions the piece will assume on its way to the destination coordinate,
 	 * 			add it to the coordinate list and then return the list with these coordinates.
 	 */
-	protected ArrayList<Coordinate> getCoordinates(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest)
+	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
 		//Since the King moves only 1 step per turn and it can move/capture
 		// to any direction, hence the list will contain only the destination coordinate. No further verification is needed.
+		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 		coordinates.add(dest);
 		return coordinates;
 	}
