@@ -43,7 +43,7 @@ public class Board
 		
 		for (Piece piece : pieceList)
 		{
-			chessBoard[piece.getCoord().getCoord_x()][piece.getCoord().getCoord_y()] = piece;
+			chessBoard[piece.getCoord().x()][piece.getCoord().y()] = piece;
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class Board
 	 */
 	public Piece getPiece(Coordinate coord)
 	{
-		return chessBoard[coord.getCoord_x()][coord.getCoord_y()];
+		return chessBoard[coord.x()][coord.y()];
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class Board
 	 */
 	public void setPiece(Piece piece, Coordinate coord)
 	{
-		chessBoard[coord.getCoord_x()][coord.getCoord_y()] = piece;
+		chessBoard[coord.x()][coord.y()] = piece;
 	}
 	
 	/**
@@ -115,16 +115,16 @@ public class Board
 	 */
 	public boolean movePiece(Coordinate orig, Coordinate dest) throws ChessException
 	{
-		ArrayList<Coordinate> coordinates = chessBoard[orig.getCoord_x()][orig.getCoord_y()].movementValidator(dest, getPiece(dest));
+		ArrayList<Coordinate> coordinates = chessBoard[orig.x()][orig.y()].movementValidator(dest, getPiece(dest));
 		boolean test = checkPath(coordinates, orig, dest);
 		
 		if (test) //If the piece's movement AND path are OK, then move it!
 		{
-			chessBoard[dest.getCoord_x()][dest.getCoord_y()] = null;
-			chessBoard[dest.getCoord_x()][dest.getCoord_y()] = getPiece(orig);
-			chessBoard[orig.getCoord_x()][orig.getCoord_y()].setCoord(dest);
-			chessBoard[orig.getCoord_x()][orig.getCoord_y()].setHasmoved(true);
-			chessBoard[orig.getCoord_x()][orig.getCoord_y()] = null;
+			chessBoard[dest.x()][dest.y()] = null;
+			chessBoard[dest.x()][dest.y()] = getPiece(orig);
+			chessBoard[orig.x()][orig.y()].setCoord(dest);
+			chessBoard[orig.x()][orig.y()].setHasmoved(true);
+			chessBoard[orig.x()][orig.y()] = null;
 		}
 		
 		return test;

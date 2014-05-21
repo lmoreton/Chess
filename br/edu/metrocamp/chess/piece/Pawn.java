@@ -37,18 +37,18 @@ public final class Pawn extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if ( Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 0
-			 && ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 1
-			 || ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 2 
+		if ( Math.abs(this.getCoord().y() - dest.y()) == 0
+			 && ( Math.abs(this.getCoord().x() - dest.x()) == 1
+			 || ( Math.abs(this.getCoord().x() - dest.x()) == 2 
 			 && this.getHasmoved() == false ) ) ) //Vertical verifications.
 		{
-			if ( this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
+			if ( this.getCoord().x() - dest.x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 			{
 				coordinates = getCoordinates(this.getCoord(), dest);
 			}
 			else
 			{
-				if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
+				if (this.getCoord().x() - dest.x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
 				{
 					coordinates = getCoordinates(this.getCoord(), dest);
 				}
@@ -60,17 +60,17 @@ public final class Pawn extends Piece
 		}
 		else
 		{
-			if ( Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x())  == 1
-				 && Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y())  == 1
+			if ( Math.abs(this.getCoord().x() - dest.x())  == 1
+				 && Math.abs(this.getCoord().y() - dest.y())  == 1
 				 && hasPiece != null ) //Diagonal verifications.
 			{
-				if (this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
+				if (this.getCoord().x() - dest.x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 				{
 					//OK, coordinates = null;
 				}
 				else
 				{
-					if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
+					if (this.getCoord().x() - dest.x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
 					{
 						//OK, coordinates = null;
 					}
@@ -98,15 +98,15 @@ public final class Pawn extends Piece
 	{
 		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 		
-		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) < 2) coordinates.add(dest);
-		else if (this.getCoord().getCoord_x() - dest.getCoord_x() > 0)
+		if (Math.abs(this.getCoord().x() - dest.x()) < 2) coordinates.add(dest);
+		else if (this.getCoord().x() - dest.x() > 0)
 		{
-			coordinates.add(new Coordinate(this.getCoord().getCoord_x(), this.getCoord().getCoord_y() - 1));
+			coordinates.add(new Coordinate(this.getCoord().x(), this.getCoord().y() - 1));
 			coordinates.add(dest);
 		}
-		else if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0)
+		else if (this.getCoord().x() - dest.x() < 0)
 		{
-			coordinates.add(new Coordinate(this.getCoord().getCoord_x(), this.getCoord().getCoord_y() + 1));
+			coordinates.add(new Coordinate(this.getCoord().x(), this.getCoord().y() + 1));
 			coordinates.add(dest);
 		}
 		

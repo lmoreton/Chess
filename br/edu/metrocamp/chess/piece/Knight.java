@@ -37,10 +37,10 @@ public final class Knight extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if ((Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 2 
-			&& Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 1) 
-			|| (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 1 
-			&& Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 2))
+		if ((Math.abs(this.getCoord().x() - dest.x()) == 2 
+			&& Math.abs(this.getCoord().y() - dest.y()) == 1) 
+			|| (Math.abs(this.getCoord().x() - dest.x()) == 1 
+			&& Math.abs(this.getCoord().y() - dest.y()) == 2))
 		{
 			coordinates = getCoordinates(this.getCoord(), dest);
 		}

@@ -37,8 +37,8 @@ public final class King extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) <= 1 
-				&& Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) <= 1) //Verify if movement is valid.
+		if (Math.abs(this.getCoord().x() - dest.x()) <= 1 
+				&& Math.abs(this.getCoord().y() - dest.y()) <= 1) //Verify if movement is valid.
 		{
 			coordinates = getCoordinates(this.getCoord(), dest);
 		}

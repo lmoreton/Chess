@@ -37,8 +37,8 @@ public final class Rook extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) == 0 
-				|| Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y()) == 0) //Verify if movement is valid.
+		if (Math.abs(this.getCoord().x() - dest.x()) == 0 
+				|| Math.abs(this.getCoord().y() - dest.y()) == 0) //Verify if movement is valid.
 		{
 			coordinates = getCoordinates(this.getCoord(), dest);
 		}
@@ -61,42 +61,42 @@ public final class Rook extends Piece
 		int i, j;
 		i = j = 0;
 		
-		if (orig.getCoord_y() < dest.getCoord_y()) //To the right
+		if (orig.y() < dest.y()) //To the right
 		{
-			while ((orig.getCoord_y() + j) < dest.getCoord_y())
+			while ((orig.y() + j) < dest.y())
 			{
 				j++;
-				coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+				coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 			}
 		}
 		else
 		{
-			if (orig.getCoord_y() > dest.getCoord_y()) //To the left
+			if (orig.y() > dest.y()) //To the left
 			{
-				while ((orig.getCoord_y() + j) > dest.getCoord_y())
+				while ((orig.y() + j) > dest.y())
 				{
 					j--;
-					coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+					coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 				}
 			}
 			else
 			{
-				if (orig.getCoord_x() < dest.getCoord_x()) //Down the river
+				if (orig.x() < dest.x()) //Down the river
 				{
-					while ((orig.getCoord_x() + i) < dest.getCoord_x())
+					while ((orig.x() + i) < dest.x())
 					{
 						i++;
-						coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+						coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 					}
 				}
 				else
 				{
-					if (orig.getCoord_x() > dest.getCoord_x()) //Up we go
+					if (orig.x() > dest.x()) //Up we go
 					{
-						while ((orig.getCoord_x() + i) > dest.getCoord_x())
+						while ((orig.x() + i) > dest.x())
 						{
 							i--;
-							coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+							coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 						}
 					}
 				}

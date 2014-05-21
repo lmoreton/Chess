@@ -36,8 +36,8 @@ public final class Bishop extends Piece
 	{
 		ArrayList<Coordinate> coordinates = null;
 		
-		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) 
-				== Math.abs(this.getCoord().getCoord_y() - dest.getCoord_y())) //Verify if movement is valid.
+		if (Math.abs(this.getCoord().x() - dest.x()) 
+				== Math.abs(this.getCoord().y() - dest.y())) //Verify if movement is valid.
 		{
 			coordinates = getCoordinates(this.getCoord(), dest);
 		}
@@ -60,46 +60,46 @@ public final class Bishop extends Piece
 		int i, j;
 		i = j = 0;
 		
-		if (orig.getCoord_x() < dest.getCoord_x() && orig.getCoord_y() < dest.getCoord_y()) //Diag down-right
+		if (orig.x() < dest.x() && orig.y() < dest.y()) //Diag down-right
 		{
-			while ((orig.getCoord_x() + i) < dest.getCoord_x() && (orig.getCoord_y() + j) < dest.getCoord_y())
+			while ((orig.x() + i) < dest.x() && (orig.y() + j) < dest.y())
 			{
 				i++;
 				j++;
-				coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+				coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 			}
 		}
 		else
 		{
-			if (orig.getCoord_x() > dest.getCoord_x() && orig.getCoord_y() > dest.getCoord_y()) //Diag up-left
+			if (orig.x() > dest.x() && orig.y() > dest.y()) //Diag up-left
 			{
-				while ((orig.getCoord_x() + i) > dest.getCoord_x() && (orig.getCoord_y() + j) > dest.getCoord_y())
+				while ((orig.x() + i) > dest.x() && (orig.y() + j) > dest.y())
 				{
 					i--;
 					j--;
-					coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+					coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 				}
 			}
 			else
 			{
-				if (orig.getCoord_x() < dest.getCoord_x() && orig.getCoord_y() > dest.getCoord_y()) //Diag down-left
+				if (orig.x() < dest.x() && orig.y() > dest.y()) //Diag down-left
 				{
-					while ((orig.getCoord_x() + i) < dest.getCoord_x() && (orig.getCoord_y() + j) > dest.getCoord_y())
+					while ((orig.x() + i) < dest.x() && (orig.y() + j) > dest.y())
 					{
 						i++;
 						j--;
-						coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+						coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 					}
 				}
 				else
 				{
-					if (orig.getCoord_x() > dest.getCoord_x() && orig.getCoord_y() < dest.getCoord_y()) //Diag up-right
+					if (orig.x() > dest.x() && orig.y() < dest.y()) //Diag up-right
 					{
-						while ((orig.getCoord_x() + i) < dest.getCoord_x() && (orig.getCoord_y() + j) > dest.getCoord_y())
+						while ((orig.x() + i) < dest.x() && (orig.y() + j) > dest.y())
 						{
 							i--;
 							j++;
-							coordinates.add( new Coordinate( (orig.getCoord_x() + i),(orig.getCoord_y() + j) ) );
+							coordinates.add( new Coordinate( (orig.x() + i),(orig.y() + j) ) );
 						}
 					}
 				}

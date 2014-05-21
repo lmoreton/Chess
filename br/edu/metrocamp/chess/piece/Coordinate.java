@@ -45,15 +45,6 @@ public class Coordinate
 
 	public String toString() 
 	{
-		return String.valueOf((char) ('a' + x)) + y;
-	}
-
-	public static void main(String[] args) 
-	{
-		Coordinate c = new Coordinate(0, 0);
-		assert c.toString().equals("a0");
-		c.set(3, 7);
-		assert c.toString().equals("d7");
-		System.out.println("c = "+c);
+		return (x + 1) + String.valueOf((char) ('a' + y));
 	}
 }

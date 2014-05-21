@@ -27,7 +27,7 @@ public class Jogada
 		setDefault();
 		formatString(inputString);
 		
-		if (orig.getCoord_x() < 0 || orig.getCoord_y() < 0 || dest.getCoord_x() < 0 || dest.getCoord_y() < 0)
+		if (orig.x() < 0 || orig.y() < 0 || dest.x() < 0 || dest.y() < 0)
 		{
 			throw new ChessArgumentException();
 		}
@@ -46,31 +46,29 @@ public class Jogada
 		{
 			if (inputString.charAt(0) == number.charAt(i))
 			{
-				this.orig.setCoord_x(i);
+				this.orig.set(i, this.orig.y());
 			}
 			
 			if (inputString.charAt(1) == letter.charAt(i))
 			{
-				this.orig.setCoord_y(i);
+				this.orig.set(this.orig.x(), i);
 			}
 			
 			if (inputString.charAt(3) == number.charAt(i))
 			{
-				this.dest.setCoord_x(i);
+				this.dest.set(i, this.orig.y());
 			}
 			
 			if (inputString.charAt(4) == letter.charAt(i))
 			{
-				this.dest.setCoord_y(i);
+				this.dest.set(this.orig.x(), i);
 			}
 		}
 	}
 	
 	private void setDefault()
 	{
-		this.orig.setCoord_x(-1);
-		this.orig.setCoord_y(-1);
-		this.dest.setCoord_x(-1);
-		this.dest.setCoord_y(-1);
+		this.orig.set(-1, -1);
+		this.dest.set(-1, -1);
 	}
 }
