@@ -27,23 +27,33 @@ public class Coordinate
 		y = -1;
 	}
 	
-	public int getCoord_x()
+	public int x()
 	{
 		return x;
 	}
 	
-	public int getCoord_y()
+	public int y()
 	{
 		return y;
 	}
 	
-	public void setCoord_x(int x)
+	public void set(int x, int y)
 	{
 		this.x = x;
-	}
-	
-	public void setCoord_y(int y)
-	{
 		this.y = y;
+	}
+
+	public String toString() 
+	{
+		return String.valueOf((char) ('a' + x)) + y;
+	}
+
+	public static void main(String[] args) 
+	{
+		Coordinate c = new Coordinate(0, 0);
+		assert c.toString().equals("a0");
+		c.set(3, 7);
+		assert c.toString().equals("d7");
+		System.out.println("c = "+c);
 	}
 }
