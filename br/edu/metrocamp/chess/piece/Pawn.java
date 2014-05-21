@@ -66,13 +66,13 @@ public final class Pawn extends Piece
 			{
 				if (this.getCoord().getCoord_x() - dest.getCoord_x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
 				{
-					//OK
+					//OK, coordinates = null;
 				}
 				else
 				{
 					if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
 					{
-						//OK
+						//OK, coordinates = null;
 					}
 					else
 					{
@@ -97,34 +97,17 @@ public final class Pawn extends Piece
 	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
 		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-		int i, j;
-		i = j = 0;
 		
-		if ((dest.getCoord_x() - orig.getCoord_x()) == 2 
-			&& Math.abs(dest.getCoord_y() - orig.getCoord_y()) == 0) //If its a black pawn moving 2 steps, then...
+		if (Math.abs(this.getCoord().getCoord_x() - dest.getCoord_x()) < 2) coordinates.add(dest);
+		else if (this.getCoord().getCoord_x() - dest.getCoord_x() > 0)
 		{
-			coordinates.add( new Coordinate( (orig.getCoord_x() + (i + 1)),(orig.getCoord_y() + j) ) );
+			coordinates.add(new Coordinate(this.getCoord().getCoord_x(), this.getCoord().getCoord_y() - 1));
+			coordinates.add(dest);
 		}
-		else
+		else if (this.getCoord().getCoord_x() - dest.getCoord_x() < 0)
 		{
-			if ((orig.getCoord_x() - dest.getCoord_x()) == 2 
-				&& Math.abs(dest.getCoord_y() - orig.getCoord_y()) == 0) //If its a white pawn moving 2 steps, then...
-			{
-				coordinates.add( new Coordinate( (orig.getCoord_x() + (i - 1)),(orig.getCoord_y() + j) ) );
-			}
-			else
-			{
-				if (Math.abs(dest.getCoord_y() - orig.getCoord_y()) == 1 
-						&& (orig.getCoord_x() - dest.getCoord_x() == 1 
-						|| dest.getCoord_x() - orig.getCoord_x() == 1)) //Diagonal check, just add dest coord.
-				{
-					coordinates.add(dest);
-				}
-				else //If any pawn is moving just 1 step forward...
-				{
-					coordinates.add(dest);
-				}
-			}
+			coordinates.add(new Coordinate(this.getCoord().getCoord_x(), this.getCoord().getCoord_y() + 1));
+			coordinates.add(dest);
 		}
 		
 		return coordinates;
