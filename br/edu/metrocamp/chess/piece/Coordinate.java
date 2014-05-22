@@ -42,6 +42,12 @@ public class Coordinate
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void set(String coord) //Not tested yet!!!
+	{
+		this.x = Integer.valueOf(coord.charAt(0));
+		this.y = Integer.valueOf(coord.charAt(1));
+	}
 
 	public String toString() 
 	{
