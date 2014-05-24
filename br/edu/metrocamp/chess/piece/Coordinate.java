@@ -43,10 +43,10 @@ public class Coordinate
 		this.y = y;
 	}
 	
-	public void set(String coord) //Not tested yet!!!
+	public void set(String coord)
 	{
-		this.x = Integer.valueOf(coord.charAt(0));
-		this.y = Integer.valueOf(coord.charAt(1));
+		this.x = Character.getNumericValue(coord.charAt(0)) - 1;
+		this.y = Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a');
 	}
 
 	public String toString() 
