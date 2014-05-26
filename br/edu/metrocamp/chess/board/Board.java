@@ -23,7 +23,7 @@ public class Board
 	 * Constant to define the board size.
 	 * @category Attribute
 	 */
-	public final int board_size = 8;
+	public static final int board_size = 8;
 	
 	private Piece[][] chessBoard = new Piece[board_size][board_size]; //This is the chess board, a matrix of pieces.
 	
@@ -33,17 +33,20 @@ public class Board
 	 */
 	public Board(ArrayList<Piece> pieceList)
 	{
+		Coordinate aux = new Coordinate();
+		
 		for (int x = 0; x < board_size; x++)
 		{
 			for (int y = 0; y < board_size; y++)
 			{
-				chessBoard[x][y] = null;
+				aux.set(x, y);
+				setPiece(null, aux);
 			}
 		}
 		
 		for (Piece piece : pieceList)
 		{
-			chessBoard[piece.getCoord().x()][piece.getCoord().y()] = piece;
+			setPiece(piece, piece.getCoord());
 		}
 	}
 	
@@ -115,16 +118,16 @@ public class Board
 	 */
 	public boolean movePiece(Coordinate orig, Coordinate dest) throws ChessException
 	{
-		ArrayList<Coordinate> coordinates = chessBoard[orig.x()][orig.y()].movementValidator(dest, getPiece(dest));
+		ArrayList<Coordinate> coordinates = getPiece(orig).movementValidator(dest, getPiece(dest));
 		boolean test = checkPath(coordinates, orig, dest);
 		
 		if (test) //If the piece's movement AND path are OK, then move it!
 		{
-			chessBoard[dest.x()][dest.y()] = null;
-			chessBoard[dest.x()][dest.y()] = getPiece(orig);
-			chessBoard[orig.x()][orig.y()].setCoord(dest);
-			chessBoard[orig.x()][orig.y()].setHasmoved(true);
-			chessBoard[orig.x()][orig.y()] = null;
+			setPiece(null, dest);
+			setPiece(getPiece(orig), dest);
+			getPiece(orig).setHasmoved(true);
+			getPiece(orig).setCoord(dest);
+			setPiece(null, orig);
 		}
 		
 		return test;

@@ -54,7 +54,10 @@ public class Game
 			{
 				display();
 				keyboardInput = readKeyboard.nextLine();
-				jog.generateMatrixCoord(keyboardInput);
+				
+				didItWork = jog.check(keyboardInput);
+				
+				if (didItWork) jog.set(keyboardInput.split(" "));
 				
 				didItWork = moveRealization();
 				
@@ -172,36 +175,18 @@ public class Game
 	
 	private boolean moveRealization() throws ChessException
 	{
-		boolean bool;
+		boolean bool = false;
 		
-		if (this.keyboardInput.length() > 5 || this.keyboardInput.isEmpty() || this.jog.orig == this.jog.dest)
+		if (jog.orig == jog.dest) throw new ChessArgumentException();
+		else if (chessBoard.getPiece(jog.orig) == null) throw new ChessArgumentException();
+		else if (turn != chessBoard.getPiece(jog.orig).getSide()) throw new ChessArgumentException();
+		else if (chessBoard.getPiece(jog.dest) != null
+				 && chessBoard.getPiece(jog.orig).getSide() 
+				 == chessBoard.getPiece(jog.dest).getSide()) throw new ChessArgumentException();
+		else 
 		{
-			bool = false;
-			throw new ChessArgumentException();
+			bool = chessBoard.movePiece(jog.orig, jog.dest);
 		}
-		else
-		{
-			if (chessBoard.getPiece(jog.orig) == null 
-				|| this.turn != chessBoard.getPiece(jog.orig).getSide())
-			{
-				throw new ChessArgumentException();
-			}
-			else
-			{
-				if (chessBoard.getPiece(jog.dest) != null 
-					&& (chessBoard.getPiece(jog.orig).getSide() != chessBoard.getPiece(jog.dest).getSide()))
-				{
-					throw new ChessArgumentException();
-				}
-				else
-				{
-					bool = true;
-				}
-			}
-		}
-		
-		bool = chessBoard.movePiece(jog.orig, jog.dest);
-		
 		
 		return bool;
 	}

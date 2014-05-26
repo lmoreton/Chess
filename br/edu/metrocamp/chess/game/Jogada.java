@@ -1,5 +1,6 @@
 package br.edu.metrocamp.chess.game;
 
+import br.edu.metrocamp.chess.board.Board;
 import br.edu.metrocamp.chess.exceptions.ChessArgumentException;
 import br.edu.metrocamp.chess.piece.Coordinate;
 
@@ -22,53 +23,58 @@ public class Jogada
 		dest = new Coordinate();
 	}
 	
-	public void generateMatrixCoord(String inputString) throws ChessArgumentException
+	public boolean check(String input) throws ChessArgumentException
 	{
-		setDefault();
-		formatString(inputString);
+		boolean isOk = false;
 		
-		if (orig.x() < 0 || orig.y() < 0 || dest.x() < 0 || dest.y() < 0)
+		if (input == null) throw new ChessArgumentException();
+		else if (input.isEmpty() || input.length() > 5) throw new ChessArgumentException();
+		else if (input.indexOf(' ') < 0) throw new ChessArgumentException();
+		else
 		{
-			throw new ChessArgumentException();
+			String[] strings = input.split(" ");
+			int i = 1;
+			
+			for (String coord : strings)
+			{
+				if (coord.length() != 2) throw new ChessArgumentException();
+				
+				if (i == 1)
+				{
+					if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
+						  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8 )
+					{
+						throw new ChessArgumentException();
+					}
+				}
+				else
+				{
+					if ( (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) < 0
+						  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) > 8 )
+					{
+						throw new ChessArgumentException();
+					}
+				}
+				
+				i++;
+			}
+			
+			isOk = true;
 		}
+		
+		return isOk;
 	}
 	
-	private void formatString(String inputString)
+	public void set(String[] coords)
 	{
-		inputString.toLowerCase();
+		int i = 1;
 		
-		//char[] letters = {'a','b','c','d','e','f','g','h'};
-		//char[] numbers = {'8','7','6','5','4','3','2','1'};
-		String letter = "abcdefgh";
-		String number = "87654321";
-		
-		for (int i = 0; i < 8; i++)
+		for (String coord : coords)
 		{
-			if (inputString.charAt(0) == number.charAt(i))
-			{
-				this.orig.set(i, this.orig.y());
-			}
+			if (i == 1) this.orig.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
+			else this.dest.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
 			
-			if (inputString.charAt(1) == letter.charAt(i))
-			{
-				this.orig.set(this.orig.x(), i);
-			}
-			
-			if (inputString.charAt(3) == number.charAt(i))
-			{
-				this.dest.set(i, this.orig.y());
-			}
-			
-			if (inputString.charAt(4) == letter.charAt(i))
-			{
-				this.dest.set(this.orig.x(), i);
-			}
+			i++;
 		}
-	}
-	
-	private void setDefault()
-	{
-		this.orig.set(-1, -1);
-		this.dest.set(-1, -1);
 	}
 }

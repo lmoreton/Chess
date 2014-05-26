@@ -42,12 +42,6 @@ public class Coordinate
 		this.x = x;
 		this.y = y;
 	}
-	
-	public void set(String coord)
-	{
-		this.x = Character.getNumericValue(coord.charAt(0)) - 1;
-		this.y = Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a');
-	}
 
 	public String toString() 
 	{

@@ -101,12 +101,12 @@ public final class Pawn extends Piece
 		if (Math.abs(this.getCoord().x() - dest.x()) < 2) coordinates.add(dest);
 		else if (this.getCoord().x() - dest.x() > 0)
 		{
-			coordinates.add(new Coordinate(this.getCoord().x(), this.getCoord().y() - 1));
+			coordinates.add(new Coordinate(this.getCoord().x() - 1, this.getCoord().y()));
 			coordinates.add(dest);
 		}
 		else if (this.getCoord().x() - dest.x() < 0)
 		{
-			coordinates.add(new Coordinate(this.getCoord().x(), this.getCoord().y() + 1));
+			coordinates.add(new Coordinate(this.getCoord().x() + 1, this.getCoord().y()));
 			coordinates.add(dest);
 		}
 		
