@@ -146,7 +146,8 @@ public class Board
 		
 		for (Coordinate aux : coordinates)
 		{
-			if (getPiece(aux) != null && getPiece(aux).getCoord() != dest)
+			if ( (getPiece(aux) != null && aux != dest)
+				  || (getPiece(aux) != null && (aux == dest && getPiece(aux).getName() == "Pawn") ) )
 			{
 				test = false;
 				throw new ChessPathException();
