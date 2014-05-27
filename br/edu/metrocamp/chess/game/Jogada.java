@@ -33,30 +33,18 @@ public class Jogada
 		else
 		{
 			String[] strings = input.split(" ");
-			int i = 1;
 			
 			for (String coord : strings)
 			{
 				if (coord.length() != 2) throw new ChessArgumentException();
 				
-				if (i == 1)
+				if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
+					  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8
+					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) < 0
+					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) > 8)
 				{
-					if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
-						  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8 )
-					{
-						throw new ChessArgumentException();
-					}
+					throw new ChessArgumentException();
 				}
-				else
-				{
-					if ( (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) < 0
-						  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) > 8 )
-					{
-						throw new ChessArgumentException();
-					}
-				}
-				
-				i++;
 			}
 			
 			isOk = true;
@@ -76,5 +64,10 @@ public class Jogada
 			
 			i++;
 		}
+	}
+	public void setDefault()
+	{
+		this.orig = new Coordinate();
+		this.dest = new Coordinate();
 	}
 }

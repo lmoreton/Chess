@@ -78,6 +78,10 @@ public class Game
 								   "Press ENTER to continue..." + "\n****************************\n");
 				readKeyboard.nextLine();
 			}
+			finally
+			{
+				jog.setDefault();
+			}
 		}
 		while(!checkmate);
 	}

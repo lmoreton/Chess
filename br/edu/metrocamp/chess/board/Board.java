@@ -144,13 +144,20 @@ public class Board
 	{
 		boolean test = true;
 		
-		for (Coordinate aux : coordinates)
+		if (coordinates == null)
 		{
-			if ( (getPiece(aux) != null && aux != dest)
-				  || (getPiece(aux) != null && (aux == dest && getPiece(aux).getName() == "Pawn") ) )
+			//Ok. Adjusted for Pawn diag movement.
+		}
+		else
+		{
+			for (Coordinate aux : coordinates)
 			{
-				test = false;
-				throw new ChessPathException();
+				if ( (getPiece(aux) != null && aux != dest)
+					  || (getPiece(aux) != null && (aux == dest && getPiece(orig).getName() == "Pawn") ) )
+				{
+					test = false;
+					throw new ChessPathException();
+				}
 			}
 		}
 		
