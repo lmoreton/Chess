@@ -6,10 +6,7 @@ package br.edu.metrocamp.chess.exceptions;
  */
 public class ChessArgumentException extends ChessException
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1906186747006084735L;
 
 	public ChessArgumentException()
 	{

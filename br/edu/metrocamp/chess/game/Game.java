@@ -59,18 +59,19 @@ public class Game
 				
 				if (didItWork) jog.set(keyboardInput.split(" "));
 				
+				if (chessBoard.getPiece(jog.dest) != null && chessBoard.getPiece(jog.dest).getName() == "King") //Check if its 'checkmate'.
+				{
+					checkmate = true;
+				}
+				
 				didItWork = moveRealization();
 				
 				if (didItWork)
 				{
 					turnCount++;
 				}
-				turn = Side.values()[(int) (turnCount % 2)];
 				
-				if (chessBoard.getPiece(jog.dest).getName() == "King") //Check if its 'checkmate'.
-				{
-					checkmate = true;
-				}
+				turn = Side.values()[(int) (turnCount % 2)];
 			}
 			catch(ChessException e)
 			{
@@ -115,41 +116,54 @@ public class Game
 	
 	private void gameGreetings()
 	{
-		System.out.println("      #   #####  #     # #######  #####   #####"	);
-		System.out.println("      #  #     # #     # #       #     # #     #"	);
-		System.out.println("      #  #       #     # #       #       #"			);
-		System.out.println("      #  #       ####### #####    #####   #####"	);
-		System.out.println("#     #  #       #     # #             #       #"	);
-		System.out.println("#     #  #     # #     # #       #     # #     #"	);
-		System.out.println(" #####    #####  #     # #######  #####   #####"	);
-		System.out.println("\n\n");
-		System.out.print("Loading");
+		int i = 0;
+		String tobesplitted = "| / -- \\";
+		String[] strings = tobesplitted.split(" ");
 		
-		try {
-			Thread.sleep(1000);
-			System.out.print(".");
-			Thread.sleep(1000);
-			System.out.print(".");
-			Thread.sleep(1000);
-			System.out.print(".\n");
+		do
+		{
+			for (String loading : strings)
+			{
+				clearConsole();
+				
+				System.out.println("      #   #####  #     # #######  #####   #####"	);
+				System.out.println("      #  #     # #     # #       #     # #     #"	);
+				System.out.println("      #  #       #     # #       #       #"			);
+				System.out.println("      #  #       ####### #####    #####   #####"	);
+				System.out.println("#     #  #       #     # #             #       #"	);
+				System.out.println("#     #  #     # #     # #       #     # #     #"	);
+				System.out.println(" #####    #####  #     # #######  #####   #####"	);
+				System.out.println("\n\n");
+				System.out.print("Loading...");
+				
+				try
+				{
+					Thread.sleep(200);
+					System.out.print(loading);
+				}
+				catch (InterruptedException e)
+				{
+					System.out.println("Something unexpected happened: \n\n" + e.getMessage());
+				}
+			}
 			
-		} catch (InterruptedException e) {
-			System.out.println("Something unexpected happened: \n\n" + e.getMessage());
+			i++;
 		}
+		while (i < 5);
 	}
 	
 	private void newGame()
 	{
 		pieceList = new ArrayList<Piece>();
 		
-		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
+		/*pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));
+		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));*/
 		pieceList.add(new Rook(new Coordinate(0,0), Side.BLACK, false));
 		pieceList.add(new Knight(new Coordinate(0,1), Side.BLACK, false));
 		pieceList.add(new Bishop(new Coordinate(0,2), Side.BLACK, false));
@@ -159,14 +173,14 @@ public class Game
 		pieceList.add(new Knight(new Coordinate(0,6), Side.BLACK, false));
 		pieceList.add(new Rook(new Coordinate(0,7), Side.BLACK, false));
 		//---------------------------------------------------------------
-		pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
+		/*pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));
+		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));*/
 		pieceList.add(new Rook(new Coordinate(7,0), Side.WHITE, false));
 		pieceList.add(new Knight(new Coordinate(7,1), Side.WHITE, false));
 		pieceList.add(new Bishop(new Coordinate(7,2), Side.WHITE, false));

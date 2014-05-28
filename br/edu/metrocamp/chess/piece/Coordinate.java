@@ -1,5 +1,7 @@
 package br.edu.metrocamp.chess.piece;
 
+import br.edu.metrocamp.chess.board.Board;
+
 /**
  * @author Lucas
  * @author Fabi
@@ -45,6 +47,6 @@ public class Coordinate
 
 	public String toString() 
 	{
-		return (x + 1) + String.valueOf((char) ('a' + y));
+		return (Board.board_size - x) + String.valueOf((char) ('a' + y));
 	}
 }

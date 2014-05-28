@@ -58,8 +58,8 @@ public final class Rook extends Piece
 	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
 		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-		int i, j;
-		i = j = 0;
+		int i = 0;
+		int j = 0;
 		
 		if (orig.y() < dest.y()) //To the right
 		{

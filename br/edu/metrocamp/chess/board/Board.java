@@ -44,10 +44,7 @@ public class Board
 			}
 		}
 		
-		for (Piece piece : pieceList)
-		{
-			setPiece(piece, piece.getCoord());
-		}
+		for (Piece piece : pieceList) setPiece(piece, piece.getCoord());
 	}
 	
 	/**
@@ -152,8 +149,8 @@ public class Board
 		{
 			for (Coordinate aux : coordinates)
 			{
-				if ( (getPiece(aux) != null && aux != dest)
-					  || (getPiece(aux) != null && (aux == dest && getPiece(orig).getName() == "Pawn") ) )
+				if ( (getPiece(aux) != null && aux.toString().compareTo(dest.toString()) != 0)
+					  || (getPiece(aux) != null && (aux.toString().compareTo(dest.toString()) == 0 && getPiece(orig).getName() == "Pawn") ) )
 				{
 					test = false;
 					throw new ChessPathException();
