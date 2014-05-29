@@ -45,7 +45,7 @@ public class Game
 	private void gameLoop()
 	{
 		boolean checkmate = false;
-		boolean didItWork;
+		boolean didItWork = false;
 		long turnCount = 0;
 		
 		do
@@ -59,21 +59,17 @@ public class Game
 				
 				if (didItWork) jog.set(keyboardInput.split(" "));
 				
-				if (chessBoard.getPiece(jog.dest) != null && chessBoard.getPiece(jog.dest).getName() == "King") //Check if its 'checkmate'.
-				{
-					checkmate = true;
-				}
-				
 				didItWork = moveRealization();
 				
-				if (didItWork)
-				{
-					turnCount++;
-				}
-				
-				turn = Side.values()[(int) (turnCount % 2)];
+				if (didItWork) turnCount++;
 			}
-			catch(ChessException e)
+			catch (ChessGameOverException e)
+			{
+				System.out.println(e.getMessage());
+				System.out.println(turn + " PIECE'S PLAYER WINS!!!!!");
+				checkmate = true;
+			}
+			catch (ChessException e)
 			{
 				System.out.println("\n" + e.getMessage() + "\n****************************\n" + 
 								   "Press ENTER to continue..." + "\n****************************\n");
@@ -81,6 +77,7 @@ public class Game
 			}
 			finally
 			{
+				turn = Side.values()[(int) (turnCount % 2)];
 				jog.setDefault();
 			}
 		}

@@ -120,6 +120,8 @@ public class Board
 		
 		if (test) //If the piece's movement AND path are OK, then move it!
 		{
+			if (getPiece(dest) != null && getPiece(dest).getName() == "King") throw new ChessGameOverException();
+			
 			setPiece(null, dest);
 			setPiece(getPiece(orig), dest);
 			getPiece(orig).setHasmoved(true);
