@@ -27,16 +27,17 @@ public class Jogada
 	{
 		boolean isOk = false;
 		
-		if (input == null) throw new ChessArgumentException();
-		else if (input.isEmpty() || input.length() > 5) throw new ChessArgumentException();
-		else if (input.indexOf(' ') < 0) throw new ChessArgumentException();
+		if (input == null) {throw new ChessArgumentException();}
+		else if (input.isEmpty() || input.length() > 5) {throw new ChessArgumentException();}
+		else if (input.indexOf(' ') < 0) {throw new ChessArgumentException();}
+		else if (input.split(" ").length != 2) {throw new ChessArgumentException();}
 		else
 		{
 			String[] strings = input.split(" ");
 			
 			for (String coord : strings)
 			{
-				if (coord.length() != 2) throw new ChessArgumentException();
+				if (coord.length() != 2) {throw new ChessArgumentException();}
 				
 				if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
 					  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8

@@ -1,6 +1,7 @@
 package br.edu.metrocamp.chess.piece;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.metrocamp.chess.exceptions.*;
 
@@ -33,9 +34,9 @@ public final class Pawn extends Piece
 	 * @return ArrayList of Coordinate.
 	 */
 	@Override
-	public ArrayList<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException
+	public List<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException
 	{
-		ArrayList<Coordinate> coordinates = null;
+		List<Coordinate> coordinates = null;
 		
 		if ( Math.abs(this.getCoord().y() - dest.y()) == 0
 			 && ( Math.abs(this.getCoord().x() - dest.x()) == 1
@@ -89,14 +90,14 @@ public final class Pawn extends Piece
 		return coordinates;
 	}
 	
-	/* 
+	/** 
 	 * Method: getCoordinates
 	 * Purpose: Verify the positions the piece will assume on its way to the destination coordinate,
 	 * 			add it to the coordinate list and then return the list with these coordinates.
 	 */
-	protected ArrayList<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
+	protected List<Coordinate> getCoordinates(Coordinate orig, Coordinate dest)
 	{
-		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+		List<Coordinate> coordinates = new ArrayList<Coordinate>();
 		
 		if (Math.abs(this.getCoord().x() - dest.x()) < 2) coordinates.add(dest);
 		else if (this.getCoord().x() - dest.x() > 0)
@@ -114,8 +115,8 @@ public final class Pawn extends Piece
 	}
 	
 	/**
+	 * Define the piece symbol based on it's Side.
 	 * @category Method
-	 * 
 	 */
 	@Override
 	protected Symbols defSymbol(Side side)

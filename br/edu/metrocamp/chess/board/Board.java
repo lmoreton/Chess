@@ -3,13 +3,14 @@
  */
 package br.edu.metrocamp.chess.board;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.metrocamp.chess.piece.Coordinate;
 import br.edu.metrocamp.chess.piece.Piece;
 import br.edu.metrocamp.chess.exceptions.*;
 
 /**
+ * Board class defines a chess board and implements it's functions.
  * @author Lucas
  * @author Fabi
  * @author Vini
@@ -31,7 +32,7 @@ public class Board
 	 * @category Constructor
 	 * @param pieceList = An ArrayList of pieces. 
 	 */
-	public Board(ArrayList<Piece> pieceList)
+	public Board(List<Piece> pieceList)
 	{
 		Coordinate aux = new Coordinate();
 		
@@ -44,7 +45,7 @@ public class Board
 			}
 		}
 		
-		for (Piece piece : pieceList) setPiece(piece, piece.getCoord());
+		for (Piece piece : pieceList) {setPiece(piece, piece.getCoord());}
 	}
 	
 	/**
@@ -52,32 +53,24 @@ public class Board
 	 * @param coord = Coordinate type, containing 'x' and 'y' integers.
 	 * @return Returns a piece(or null), on the requested coordinates of the chess board.
 	 */
-	public Piece getPiece(Coordinate coord)
-	{
-		return chessBoard[coord.x()][coord.y()];
-	}
+	public Piece getPiece(Coordinate coord) {return chessBoard[coord.x()][coord.y()];}
 	
 	/**
 	 * @category Method (Overload)
 	 * @param coord = Coordinate type, containing 'x' and 'y' integers.
 	 * @return Returns a piece(or null), on the requested coordinates of the chess board.
 	 */
-	public Piece getPiece(int x, int y)
-	{
-		return chessBoard[x][y];
-	}
+	public Piece getPiece(int x, int y) {return chessBoard[x][y];}
 	
 	/**
 	 * @category Method
 	 * @param piece = A piece to be placed into the chess board.
 	 * @param coord = A Coordinate type.
 	 */
-	public void setPiece(Piece piece, Coordinate coord)
-	{
-		chessBoard[coord.x()][coord.y()] = piece;
-	}
+	public void setPiece(Piece piece, Coordinate coord) {chessBoard[coord.x()][coord.y()] = piece;}
 	
 	/**
+	 * This method is used to literally 'draw' the chess board.
 	 * @category Method
 	 */
 	public void draw()
@@ -90,14 +83,8 @@ public class Board
 			
 			for (int j = 0; j < board_size; j++)
 			{
-				if (getPiece(i,j) == null)
-				{
-					System.out.print("   |");
-				}
-				else
-				{
-					System.out.print(" " + getPiece(i,j).getSymbol().toChar() + " |");
-				}
+				if (getPiece(i,j) == null) {System.out.print("   |");}
+				else {System.out.print(" " + getPiece(i,j).getSymbol().toChar() + " |");}
 			}
 			
 			System.out.println("");
@@ -108,6 +95,7 @@ public class Board
 	}
 	
 	/**
+	 * After couple of verifications, it moves the piece from Coordinate orig to Coordinate dest.
 	 * @category Method
 	 * @param orig = Origin coordinate.
 	 * @param dest = Destination coordinate.
@@ -115,12 +103,12 @@ public class Board
 	 */
 	public boolean movePiece(Coordinate orig, Coordinate dest) throws ChessException
 	{
-		ArrayList<Coordinate> coordinates = getPiece(orig).movementValidator(dest, getPiece(dest));
+		List<Coordinate> coordinates = getPiece(orig).movementValidator(dest, getPiece(dest));
 		boolean test = checkPath(coordinates, orig, dest);
 		
 		if (test) //If the piece's movement AND path are OK, then move it!
 		{
-			if (getPiece(dest) != null && getPiece(dest).getName() == "King") throw new ChessGameOverException();
+			if (getPiece(dest) != null && getPiece(dest).getName() == "King") throw new ChessCheckMateException();
 			
 			setPiece(null, dest);
 			setPiece(getPiece(orig), dest);
@@ -139,7 +127,7 @@ public class Board
 	 * @param dest = Destination coordinate.
 	 * @return Returns a boolean for testing purpose.
 	 */
-	public boolean checkPath(ArrayList<Coordinate> coordinates, Coordinate orig, Coordinate dest) throws ChessPathException
+	public boolean checkPath(List<Coordinate> coordinates, Coordinate orig, Coordinate dest) throws ChessPathException
 	{
 		boolean test = true;
 		

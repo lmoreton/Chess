@@ -29,24 +29,18 @@ public class Coordinate
 		y = -1;
 	}
 	
-	public int x()
-	{
-		return x;
-	}
+	public int x() {return x;}
 	
-	public int y()
-	{
-		return y;
-	}
+	public int y() {return y;}
 	
 	public void set(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
 	}
-
-	public String toString() 
-	{
-		return (Board.board_size - x) + String.valueOf((char) ('a' + y));
-	}
+	
+	/**
+	 * Implements a visual representation for Coordinate.
+	 */
+	public String toString() {return (Board.board_size - x) + String.valueOf((char) ('a' + y));}
 }

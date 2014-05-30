@@ -4,6 +4,7 @@
 package br.edu.metrocamp.chess.game;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import br.edu.metrocamp.chess.board.Board;
@@ -11,6 +12,7 @@ import br.edu.metrocamp.chess.exceptions.*;
 import br.edu.metrocamp.chess.piece.*;
 
 /**
+ * Game class defines a chess game and it's components.
  * @author Lucas
  * @author Fabi
  * @author Vini
@@ -20,7 +22,7 @@ import br.edu.metrocamp.chess.piece.*;
  */
 public class Game
 {
-	private ArrayList<Piece> pieceList;
+	private List<Piece> pieceList;
 	private Board chessBoard;
 	private Side turn;
 	private Scanner readKeyboard;
@@ -42,6 +44,10 @@ public class Game
 		gameLoop();
 	}
 	
+	/**
+	 * This method contains the game's main loop and the gameplay logic.
+	 * @category Method
+	 */
 	private void gameLoop()
 	{
 		boolean checkmate = false;
@@ -63,7 +69,7 @@ public class Game
 				
 				if (didItWork) turnCount++;
 			}
-			catch (ChessGameOverException e)
+			catch (ChessCheckMateException e)
 			{
 				System.out.println(e.getMessage());
 				System.out.println(turn + " PIECE'S PLAYER WINS!!!!!");
@@ -89,16 +95,12 @@ public class Game
 	{
 		clearConsole();
 		System.out.println("\n");
+		System.out.println("Examples of input:\n\"Enter your movement: <origin> <destination>\"" +
+						   "\n\"Enter your movement: 2a 4a\"");
 		chessBoard.draw();
 		
-		if (turn == Side.WHITE)
-		{
-			System.out.print("\nWhite turn: ");
-		}
-		else
-		{
-			System.out.print("\nBlack turn: ");
-		}
+		if (turn == Side.WHITE) {System.out.print("\nWhite turn: ");}
+		else {System.out.print("\nBlack turn: ");}
 	}
 	
 	private void clearConsole()
@@ -153,14 +155,14 @@ public class Game
 	{
 		pieceList = new ArrayList<Piece>();
 		
-		/*pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
+		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false));
 		pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));*/
+		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));
 		pieceList.add(new Rook(new Coordinate(0,0), Side.BLACK, false));
 		pieceList.add(new Knight(new Coordinate(0,1), Side.BLACK, false));
 		pieceList.add(new Bishop(new Coordinate(0,2), Side.BLACK, false));
@@ -170,14 +172,14 @@ public class Game
 		pieceList.add(new Knight(new Coordinate(0,6), Side.BLACK, false));
 		pieceList.add(new Rook(new Coordinate(0,7), Side.BLACK, false));
 		//---------------------------------------------------------------
-		/*pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
+		pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false));
 		pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));*/
+		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));
 		pieceList.add(new Rook(new Coordinate(7,0), Side.WHITE, false));
 		pieceList.add(new Knight(new Coordinate(7,1), Side.WHITE, false));
 		pieceList.add(new Bishop(new Coordinate(7,2), Side.WHITE, false));
@@ -188,20 +190,23 @@ public class Game
 		pieceList.add(new Rook(new Coordinate(7,7), Side.WHITE, false));
 	}
 	
+	/**
+	 * This method check all possible illegal movements, if and only if none of them match, it'll call movePiece() method.
+	 * @return
+	 * @throws ChessException
+	 */
 	private boolean moveRealization() throws ChessException
 	{
 		boolean bool = false;
 		
-		if (jog.orig == jog.dest) throw new ChessArgumentException();
-		else if (chessBoard.getPiece(jog.orig) == null) throw new ChessArgumentException();
-		else if (turn != chessBoard.getPiece(jog.orig).getSide()) throw new ChessArgumentException();
+		if (jog.orig == jog.dest) {throw new ChessSameCoordException();}
+		else if (chessBoard.getPiece(jog.orig) == null) {throw new ChessNullCoordException();}
+		else if (turn != chessBoard.getPiece(jog.orig).getSide()) {throw new ChessWrongTurnException();}
 		else if (chessBoard.getPiece(jog.dest) != null
 				 && chessBoard.getPiece(jog.orig).getSide() 
-				 == chessBoard.getPiece(jog.dest).getSide()) throw new ChessArgumentException();
-		else 
-		{
-			bool = chessBoard.movePiece(jog.orig, jog.dest);
-		}
+				 == chessBoard.getPiece(jog.dest).getSide()) {throw new ChessCannibalException();}
+		
+		else {bool = chessBoard.movePiece(jog.orig, jog.dest);}
 		
 		return bool;
 	}

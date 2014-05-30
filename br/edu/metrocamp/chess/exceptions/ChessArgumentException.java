@@ -1,8 +1,12 @@
 package br.edu.metrocamp.chess.exceptions;
 
 /**
- * @author lucasmo
- *
+ * @author Lucas
+ * @author Fabi
+ * @author Vini
+ * @author Marcos
+ * @author Adailton
+ * @category Class
  */
 public class ChessArgumentException extends ChessException
 {

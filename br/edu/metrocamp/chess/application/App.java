@@ -6,6 +6,7 @@ package br.edu.metrocamp.chess.application;
 import br.edu.metrocamp.chess.game.Game;
 
 /**
+ * The application class is responsible for calling the method main and instantiate the game.
  * @author Lucas
  * @author Fabi
  * @author Vini
