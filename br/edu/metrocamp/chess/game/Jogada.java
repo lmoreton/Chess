@@ -1,10 +1,12 @@
 package br.edu.metrocamp.chess.game;
 
-import br.edu.metrocamp.chess.board.Board;
-import br.edu.metrocamp.chess.exceptions.ChessArgumentException;
 import br.edu.metrocamp.chess.piece.Coordinate;
+import br.edu.metrocamp.chess.piece.Piece;
+import br.edu.metrocamp.chess.piece.Side;
 
 /**
+ * The purpose of this class is to maintain a structured data of all elements used to make a move.
+ * Only getters were made, because once a "Jogada" object is created, it's values won't be changed.
  * @author Lucas
  * @author Fabi
  * @author Vini
@@ -14,61 +16,25 @@ import br.edu.metrocamp.chess.piece.Coordinate;
  */
 public class Jogada
 {
-	public Coordinate orig;
-	public Coordinate dest;
+	private Coordinate orig;
+	private Coordinate dest;
+	private Piece origin;
+	private Piece destination;
+	private Side turn;
 	
-	public Jogada()
-	{
-		orig = new Coordinate();
-		dest = new Coordinate();
-	}
 	
-	public boolean check(String input) throws ChessArgumentException
+	public Jogada(Coordinate orig, Coordinate dest, Piece origin, Piece destination, Side turn)
 	{
-		boolean isOk = false;
-		
-		if (input == null) {throw new ChessArgumentException();}
-		else if (input.isEmpty() || input.length() > 5) {throw new ChessArgumentException();}
-		else if (input.indexOf(' ') < 0) {throw new ChessArgumentException();}
-		else if (input.split(" ").length != 2) {throw new ChessArgumentException();}
-		else
-		{
-			String[] strings = input.split(" ");
-			
-			for (String coord : strings)
-			{
-				if (coord.length() != 2) {throw new ChessArgumentException();}
-				
-				if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
-					  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8
-					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) < 0
-					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) > 8)
-				{
-					throw new ChessArgumentException();
-				}
-			}
-			
-			isOk = true;
-		}
-		
-		return isOk;
+		this.orig = orig;
+		this.dest = dest;
+		this.origin = origin;
+		this.destination = destination;
+		this.turn = turn;
 	}
 	
-	public void set(String[] coords)
-	{
-		int i = 1;
-		
-		for (String coord : coords)
-		{
-			if (i == 1) this.orig.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
-			else this.dest.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
-			
-			i++;
-		}
-	}
-	public void setDefault()
-	{
-		this.orig = new Coordinate();
-		this.dest = new Coordinate();
-	}
+	public Coordinate getOrigCoord() {return this.orig;}
+	public Coordinate getDestCoord() {return this.dest;}
+	public Piece getOrigPiece() {return this.origin;}
+	public Piece getDestPiece() {return this.destination;}
+	public Side getTurn() {return this.turn;}
 }

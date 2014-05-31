@@ -3,7 +3,9 @@
  */
 package br.edu.metrocamp.chess.game;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,7 +29,10 @@ public class Game
 	private Side turn;
 	private Scanner readKeyboard;
 	private String keyboardInput;
-	private Jogada jog;
+	private Deque<Jogada> jogadaStack;
+	private Coordinate currentOrig;
+	private Coordinate currentDest;
+	private Boolean canUndo;
 	
 	/**
 	 * @category Constructor
@@ -39,8 +44,11 @@ public class Game
 		gameGreetings();
 		readKeyboard = new Scanner(System.in);
 		keyboardInput = "";
-		jog = new Jogada();
+		currentOrig = new Coordinate();
+		currentDest = new Coordinate();
+		jogadaStack = new ArrayDeque<Jogada>();
 		turn = Side.WHITE;
+		canUndo = true;
 		gameLoop();
 	}
 	
@@ -50,6 +58,7 @@ public class Game
 	 */
 	private void gameLoop()
 	{
+		Jogada jog = null;
 		boolean checkmate = false;
 		boolean didItWork = false;
 		long turnCount = 0;
@@ -58,16 +67,29 @@ public class Game
 		{
 			try
 			{
+				didItWork = false;
 				display();
 				keyboardInput = readKeyboard.nextLine();
 				
-				didItWork = jog.check(keyboardInput);
+				didItWork = checkInput(keyboardInput);
 				
-				if (didItWork) jog.set(keyboardInput.split(" "));
+				if (didItWork) { setCurrentCoords(keyboardInput.split(" ")); }
 				
-				didItWork = moveRealization();
+				jog = moveRealization();
 				
-				if (didItWork) turnCount++;
+				if (jog != null)
+				{
+					jogadaStack.push(jog);
+					turnCount++;
+					turn = defTurn(turnCount);
+					canUndo = true;
+				}
+			}
+			catch (ChessUndoException e)
+			{
+				turnCount--;
+				turn = defTurn(turnCount);
+				canUndo = false;
 			}
 			catch (ChessCheckMateException e)
 			{
@@ -83,20 +105,23 @@ public class Game
 			}
 			finally
 			{
-				turn = Side.values()[(int) (turnCount % 2)];
-				jog.setDefault();
+				jog = null;
+				currentOrig = new Coordinate();
+				currentDest = new Coordinate();
 			}
 		}
 		while(!checkmate);
 	}
 	
+	private Side defTurn(long x) {return Side.values()[(int) (x % 2)];}
 	
 	private void display()
 	{
 		clearConsole();
 		System.out.println("\n");
 		System.out.println("Examples of input:\n\"Enter your movement: <origin> <destination>\"" +
-						   "\n\"Enter your movement: 2a 4a\"");
+						   "\n\"Enter your movement: 2a 4a\"" +
+						   "\n\"Enter your movement: undo\" --> If you regret your move, type in \"undo\" to make a wiser move!");
 		chessBoard.draw();
 		
 		if (turn == Side.WHITE) {System.out.print("\nWhite turn: ");}
@@ -151,63 +176,124 @@ public class Game
 		while (i < 5);
 	}
 	
+	/**
+	 * This method check all possible illegal movements, if and only if none of them match, it'll call movePiece() method.
+	 * @throws ChessException
+	 */
+	private Jogada moveRealization() throws ChessException
+	{
+		Jogada jog = null;
+		
+		if (currentOrig == currentDest) {throw new ChessSameCoordException();}
+		else if (chessBoard.getPiece(currentOrig) == null) {throw new ChessNullCoordException();}
+		else if (turn != chessBoard.getPiece(currentOrig).getSide()) {throw new ChessWrongTurnException();}
+		else if (chessBoard.getPiece(currentDest) != null
+				 && chessBoard.getPiece(currentOrig).getSide() 
+				 == chessBoard.getPiece(currentDest).getSide()) {throw new ChessCannibalException();}
+		
+		else
+		{
+			jog = new Jogada(currentOrig, currentDest, chessBoard.getPiece(currentOrig), chessBoard.getPiece(currentDest), turn);
+			chessBoard.movePiece(currentOrig, currentDest, null, false);
+		}
+		
+		return jog;
+	}
+	
+	private boolean checkInput(String input) throws ChessArgumentException, ChessUndoException, ChessException
+	{
+		boolean isOk = false;
+		
+		if (input == null) {throw new ChessArgumentException();}
+		else if (input.isEmpty() || input.length() > 5) {throw new ChessArgumentException();}
+		else if (input.equalsIgnoreCase("undo") && canUndo) {undo(); throw new ChessUndoException();}
+		else if (input.equalsIgnoreCase("undo") && !canUndo) {throw new ChessCannotUndoException();}
+		else if (input.indexOf(' ') < 0) {throw new ChessArgumentException();}
+		else if (input.split(" ").length != 2) {throw new ChessArgumentException();}
+		else
+		{
+			String[] strings = input.split(" ");
+			
+			for (String coord : strings)
+			{
+				if (coord.length() != 2) {throw new ChessArgumentException();}
+				
+				if ( (Board.board_size - Character.getNumericValue(coord.charAt(0))) < 0
+					  || (Board.board_size - Character.getNumericValue(coord.charAt(0))) > 8
+					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) < 0
+					  || (Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a')) > 8)
+				{
+					throw new ChessArgumentException();
+				}
+			}
+			
+			isOk = true;
+		}
+		
+		return isOk;
+	}
+	
+	private void undo() throws ChessException
+	{
+		Jogada lastmove = null;
+		
+		if (jogadaStack.isEmpty() || jogadaStack == null) {throw new ChessJogStackException();}
+		else
+		{
+			lastmove = jogadaStack.pop();
+			 chessBoard.movePiece(lastmove.getDestCoord(), lastmove.getOrigCoord(), lastmove.getDestPiece(), true);
+		}
+	}
+	
+	private void setCurrentCoords(String[] coords)
+	{
+		int i = 1;
+		
+		for (String coord : coords)
+		{
+			if (i == 1) this.currentOrig.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
+			else currentDest.set(Board.board_size - Character.getNumericValue(coord.charAt(0)), Character.getNumericValue(coord.charAt(1)) - Character.getNumericValue('a'));
+			
+			i++;
+		}
+	}
+	
 	private void newGame()
 	{
 		pieceList = new ArrayList<Piece>();
 		
-		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false));
-		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false));
-		pieceList.add(new Rook(new Coordinate(0,0), Side.BLACK, false));
-		pieceList.add(new Knight(new Coordinate(0,1), Side.BLACK, false));
-		pieceList.add(new Bishop(new Coordinate(0,2), Side.BLACK, false));
-		pieceList.add(new Queen(new Coordinate(0,3), Side.BLACK, false));
-		pieceList.add(new King(new Coordinate(0,4), Side.BLACK, false));
-		pieceList.add(new Bishop(new Coordinate(0,5), Side.BLACK, false));
-		pieceList.add(new Knight(new Coordinate(0,6), Side.BLACK, false));
-		pieceList.add(new Rook(new Coordinate(0,7), Side.BLACK, false));
+		pieceList.add(new Pawn(new Coordinate(1,0), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,1), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,2), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,3), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,4), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,5), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,6), Side.BLACK, false, true));
+		pieceList.add(new Pawn(new Coordinate(1,7), Side.BLACK, false, true));
+		pieceList.add(new Rook(new Coordinate(0,0), Side.BLACK, false, true));
+		pieceList.add(new Knight(new Coordinate(0,1), Side.BLACK, false, true));
+		pieceList.add(new Bishop(new Coordinate(0,2), Side.BLACK, false, true));
+		pieceList.add(new Queen(new Coordinate(0,3), Side.BLACK, false, true));
+		pieceList.add(new King(new Coordinate(0,4), Side.BLACK, false, true));
+		pieceList.add(new Bishop(new Coordinate(0,5), Side.BLACK, false, true));
+		pieceList.add(new Knight(new Coordinate(0,6), Side.BLACK, false, true));
+		pieceList.add(new Rook(new Coordinate(0,7), Side.BLACK, false, true));
 		//---------------------------------------------------------------
-		pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false));
-		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false));
-		pieceList.add(new Rook(new Coordinate(7,0), Side.WHITE, false));
-		pieceList.add(new Knight(new Coordinate(7,1), Side.WHITE, false));
-		pieceList.add(new Bishop(new Coordinate(7,2), Side.WHITE, false));
-		pieceList.add(new Queen(new Coordinate(7,3), Side.WHITE, false));
-		pieceList.add(new King(new Coordinate(7,4), Side.WHITE, false));
-		pieceList.add(new Bishop(new Coordinate(7,5), Side.WHITE, false));
-		pieceList.add(new Knight(new Coordinate(7,6), Side.WHITE, false));
-		pieceList.add(new Rook(new Coordinate(7,7), Side.WHITE, false));
-	}
-	
-	/**
-	 * This method check all possible illegal movements, if and only if none of them match, it'll call movePiece() method.
-	 * @return
-	 * @throws ChessException
-	 */
-	private boolean moveRealization() throws ChessException
-	{
-		boolean bool = false;
-		
-		if (jog.orig == jog.dest) {throw new ChessSameCoordException();}
-		else if (chessBoard.getPiece(jog.orig) == null) {throw new ChessNullCoordException();}
-		else if (turn != chessBoard.getPiece(jog.orig).getSide()) {throw new ChessWrongTurnException();}
-		else if (chessBoard.getPiece(jog.dest) != null
-				 && chessBoard.getPiece(jog.orig).getSide() 
-				 == chessBoard.getPiece(jog.dest).getSide()) {throw new ChessCannibalException();}
-		
-		else {bool = chessBoard.movePiece(jog.orig, jog.dest);}
-		
-		return bool;
+		pieceList.add(new Pawn(new Coordinate(6,0), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,1), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,2), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,3), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,4), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,5), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,6), Side.WHITE, false, true));
+		pieceList.add(new Pawn(new Coordinate(6,7), Side.WHITE, false, true));
+		pieceList.add(new Rook(new Coordinate(7,0), Side.WHITE, false, true));
+		pieceList.add(new Knight(new Coordinate(7,1), Side.WHITE, false, true));
+		pieceList.add(new Bishop(new Coordinate(7,2), Side.WHITE, false, true));
+		pieceList.add(new Queen(new Coordinate(7,3), Side.WHITE, false, true));
+		pieceList.add(new King(new Coordinate(7,4), Side.WHITE, false, true));
+		pieceList.add(new Bishop(new Coordinate(7,5), Side.WHITE, false, true));
+		pieceList.add(new Knight(new Coordinate(7,6), Side.WHITE, false, true));
+		pieceList.add(new Rook(new Coordinate(7,7), Side.WHITE, false, true));
 	}
 }

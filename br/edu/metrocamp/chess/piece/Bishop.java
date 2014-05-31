@@ -21,9 +21,9 @@ public final class Bishop extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public Bishop(Coordinate init, Side side, Boolean hasmoved)
+	public Bishop(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("Bishop", init, side, hasmoved);
+		super("Bishop", init, side, hasmoved, isAlive);
 	}
 	
 	/**

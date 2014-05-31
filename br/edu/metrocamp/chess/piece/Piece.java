@@ -15,11 +15,13 @@ import br.edu.metrocamp.chess.exceptions.*;
  */
 public abstract class Piece
 {
+	private static int id; //ID to make each piece unique.
 	private String name; //piece name.
 	private Side side; //piece side (white or black).
 	private Symbols symbol; //piece symbol.
 	private Coordinate coord; //current piece coordinate.
 	private Boolean hasmoved; //if the piece never moved before, this will be false.
+	private Boolean isAlive; //True - if the piece is on the board/playing; False - if it has been eaten.
 	
 	/**
 	 * 
@@ -28,28 +30,36 @@ public abstract class Piece
 	 * @param side
 	 * @param hasmoved
 	 */
-	public Piece(String name, Coordinate init, Side side, Boolean hasmoved)
+	public Piece(String name, Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
 		this.name = name;
 		this.coord = init;
 		this.side = side;
 		this.symbol = defSymbol(side);
 		this.hasmoved = hasmoved;
+		this.isAlive = isAlive;
+		Piece.id += 1;
 	}
 	
-	public String getName() {return name;}
+	public int getID() {return id;}
 	
-	public Side getSide() {return side;}
+	public String getName() {return this.name;}
 	
-	public Symbols getSymbol() {return symbol;}
+	public Side getSide() {return this.side;}
 	
-	public Coordinate getCoord() {return coord;}
+	public Symbols getSymbol() {return this.symbol;}
+	
+	public Coordinate getCoord() {return this.coord;}
 	
 	public void setCoord(Coordinate coord) {this.coord = coord;}
 	
-	public Boolean getHasmoved() {return hasmoved;}
+	public Boolean getHasmoved() {return this.hasmoved;}
 	
 	public void setHasmoved(Boolean hasmoved) {this.hasmoved = hasmoved;}
+	
+	public Boolean getIsAlive() {return this.isAlive;}
+	
+	public void setIsAlive(Boolean isAlive) {this.isAlive = isAlive;}
 	
 	public abstract List<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException;
 	

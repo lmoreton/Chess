@@ -22,9 +22,9 @@ public final class Rook extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public Rook(Coordinate init, Side side, Boolean hasmoved)
+	public Rook(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("Rook", init, side, hasmoved);
+		super("Rook", init, side, hasmoved, isAlive);
 	}
 	
 	/**

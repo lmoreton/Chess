@@ -22,9 +22,9 @@ public final class Queen extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public Queen(Coordinate init, Side side, Boolean hasmoved)
+	public Queen(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("Queen", init, side, hasmoved);
+		super("Queen", init, side, hasmoved, isAlive);
 	}
 	
 	/**

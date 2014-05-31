@@ -101,23 +101,31 @@ public class Board
 	 * @param dest = Destination coordinate.
 	 * @return Returns a boolean for testing purpose.
 	 */
-	public boolean movePiece(Coordinate orig, Coordinate dest) throws ChessException
+	public void movePiece(Coordinate orig, Coordinate dest, Piece aux, Boolean isUndo) throws ChessException
 	{
-		List<Coordinate> coordinates = getPiece(orig).movementValidator(dest, getPiece(dest));
-		boolean test = checkPath(coordinates, orig, dest);
+		boolean test = false;
+		
+		if (aux == null && !isUndo)
+		{
+			List<Coordinate> coordinates = getPiece(orig).movementValidator(dest, getPiece(dest));
+			test = checkPath(coordinates, orig, dest);
+		}
+		else
+		{
+			test = true;
+		}
 		
 		if (test) //If the piece's movement AND path are OK, then move it!
 		{
 			if (getPiece(dest) != null && getPiece(dest).getName() == "King") throw new ChessCheckMateException();
 			
+			if (getPiece(dest) != null) { getPiece(dest).setIsAlive(false); }
+			
 			setPiece(null, dest);
 			setPiece(getPiece(orig), dest);
-			getPiece(orig).setHasmoved(true);
 			getPiece(orig).setCoord(dest);
-			setPiece(null, orig);
+			setPiece(aux, orig);
 		}
-		
-		return test;
 	}
 	
 	/**

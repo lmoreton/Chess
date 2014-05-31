@@ -22,9 +22,9 @@ public final class Pawn extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public Pawn(Coordinate init, Side side, Boolean hasmoved)
+	public Pawn(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("Pawn", init, side, hasmoved);
+		super("Pawn", init, side, hasmoved, isAlive);
 	}
 	
 	/**

@@ -22,9 +22,9 @@ public final class Knight extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public Knight(Coordinate init, Side side, Boolean hasmoved)
+	public Knight(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("Knight", init, side, hasmoved);
+		super("Knight", init, side, hasmoved, isAlive);
 	}
 	
 	/**

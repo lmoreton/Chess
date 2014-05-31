@@ -22,9 +22,9 @@ public final class King extends Piece
 	 * @param side = Piece's side.
 	 * @param hasmoved = Flag to check if the piece has moved before or not.
 	 */
-	public King(Coordinate init, Side side, Boolean hasmoved)
+	public King(Coordinate init, Side side, Boolean hasmoved, Boolean isAlive)
 	{
-		super("King", init, side, hasmoved);
+		super("King", init, side, hasmoved, isAlive);
 	}
 	
 	/**
