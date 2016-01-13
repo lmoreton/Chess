@@ -24,7 +24,7 @@ public class Board
 	 * Constant to define the board size.
 	 * @category Attribute
 	 */
-	public static final int board_size = 8;
+	public static final int BOARD_SIZE = 8;
 	
 	private Piece[][] chessBoard = new Piece[board_size][board_size]; //This is the chess board, a matrix of pieces.
 	

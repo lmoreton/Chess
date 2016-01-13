@@ -36,58 +36,26 @@ public final class Pawn extends Piece
 	@Override
 	public List<Coordinate> movementValidator(Coordinate dest, Piece hasPiece) throws ChessException
 	{
-		List<Coordinate> coordinates = null;
-		
-		if ( Math.abs(this.getCoord().y() - dest.y()) == 0
-			 && ( Math.abs(this.getCoord().x() - dest.x()) == 1
-			 || ( Math.abs(this.getCoord().x() - dest.x()) == 2 
-			 && this.getHasmoved() == false ) ) ) //Vertical verifications.
-		{
-			if ( this.getCoord().x() - dest.x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
-			{
-				coordinates = getCoordinates(this.getCoord(), dest);
-			}
-			else
-			{
-				if (this.getCoord().x() - dest.x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
-				{
-					coordinates = getCoordinates(this.getCoord(), dest);
-				}
-				else
-				{
-					throw new ChessPieceMovementException();
-				}
-			}
-		}
-		else
-		{
-			if ( Math.abs(this.getCoord().x() - dest.x())  == 1
-				 && Math.abs(this.getCoord().y() - dest.y())  == 1
-				 && hasPiece != null ) //Diagonal verifications.
-			{
-				if (this.getCoord().x() - dest.x() > 0 && this.getSide() == Side.WHITE) //Meaning it's a white pawn.
-				{
-					//OK, coordinates = null;
-				}
-				else
-				{
-					if (this.getCoord().x() - dest.x() < 0 && this.getSide() == Side.BLACK) //Meaning it's a black pawn.
-					{
-						//OK, coordinates = null;
-					}
-					else
-					{
-						throw new ChessPieceMovementException();
-					}
-				}
-			}
-			else
-			{
-				throw new ChessPieceMovementException();
-			}
-		}
-		
-		return coordinates;
+        bool isForward =  this.getCoord().y() == dest.y() && hasPiece == null 
+            && (Math.abs(this.getCoord().x() - dest.x()) == 1
+                || (Math.abs(this.getCoord().x() - dest.x()) == 2 
+                        && this.getHasmoved() == false));
+
+        bool isDiagonal =  Math.abs(this.getCoord().x() - dest.x())  == 1
+            && Math.abs(this.getCoord().y() - dest.y())  == 1
+            && hasPiece != null;
+
+        if (isForward || isDiagonal)
+        {
+            if ((this.getSide() == Side.WHITE
+                    && this.getCoord().x() - dest.x() > 0)
+                    || (this.getSide() == Side.BLACK
+                    && this.getCoord().x() - dest.x() < 0))
+            {
+                return getCoordinates(this.getCoord(), dest);
+            }
+        }
+        throw new ChessPieceMovementException();
 	}
 	
 	/** 
